@@ -4,18 +4,15 @@ Save your session key into `.env` file in the root folder as below:
 ```
 SESSION=abc...
 ```
-Install [NodeJS](https://nodejs.dev/en/learn/how-to-install-nodejs/) and its packages
-```
-npm install
-```
+
 Start solving problems
 ```
 
-npm run start -- -d <day> -p <part> -y <year> -l <language>
+npx @nguyenhuu/adventofcode@latest -d <day> -p <part> -y <year> -l <language>
 ```
 Example:
 ```
-npm run start -- -d 1 -p 1 -y 2019 -l python
+npx @nguyenhuu/adventofcode@latest -d 1 -p 1 -y 2019 -l python
 ```
 ## Hot keys
 * **s** : Using sample.txt as input
