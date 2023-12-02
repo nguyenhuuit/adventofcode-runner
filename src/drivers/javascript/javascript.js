@@ -1,7 +1,7 @@
 import './global.js';
 import fs from 'fs';
 import path from 'path'
-import EXTENSIONS from '../../utils/languages.js'
+import { EXTENSIONS } from '../../utils/languages.js'
 
 const year = process.argv[2];
 const day = process.argv[3];

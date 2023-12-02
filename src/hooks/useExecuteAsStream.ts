@@ -14,7 +14,7 @@ export const useExecuteAsStream = ({ onOutput, onResult, onExecutionTime, onStar
     onStart && onStart()
     const childProcess = executeAsStream(state)
     childProcess.on("message", (msg: any) => {
-      onResult(msg.result)
+      onResult(msg.result + '')
       onExecutionTime(msg.time)
     })
     childProcess.on("close", () => {

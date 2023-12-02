@@ -1,12 +1,13 @@
 {
   "name": "@nguyenhuu/adventofcode",
-  "version": "0.0.8",
+  "version": "0.0.12",
   "description": "Advent of Code Runner",
   "main": "dist/main.js",
   "type": "module",
   "repository": "git://github.com/nguyenhuuit/adventofcode-runner.git",
   "scripts": {
-    "build": "tsc"
+    "build": "rm -rf dist && tsc && cp -r src/drivers dist",
+    "publish": "npm run build && npm publish"
   },
   "author": "Huu Nguyen <nguyenhuuit@yahoo.com>",
   "license": "MIT",

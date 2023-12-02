@@ -194,7 +194,7 @@ const App = ({ state }: Props) => {
 				{ (answer && !loading) && <Text>{`   ⏱ ${perfLog}`}</Text>}
 			</Box>
 			
-			{output && (
+			{!!output && (
 				<>
 					<Box height={1}/>
 					<Box borderTop flexDirection="column">
