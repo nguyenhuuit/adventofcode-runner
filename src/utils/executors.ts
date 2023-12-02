@@ -75,7 +75,7 @@ const executeGolang = (state: ExecutionInput): ChildProcess => {
   execSync(`go build -buildmode=plugin -o ${dir}/drivers/golang/golang.so ${solutionFile}`);
   childProcess = spawn(
     'go',
-    ['run', dir + '/drivers/golang/golang.go', inputFile],
+    ['run', dir + '/drivers/golang/golang.go', inputFile, `${dir}/drivers/golang/golang.so`],
     {
       cwd: '.',
       stdio: ['pipe', 'pipe', 'pipe', 'ipc']

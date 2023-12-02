@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	p, err := plugin.Open("src/drivers/golang/golang.so")
+	p, err := plugin.Open(os.Args[2])
 	if err != nil {
 		panic(err)
 	}
