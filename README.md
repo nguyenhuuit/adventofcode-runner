@@ -12,7 +12,7 @@ npx @nguyenhuu/adventofcode@latest -d <day> -p <part> -y <year> -l <language>
 ```
 Example:
 ```
-npx @nguyenhuu/adventofcode@latest -d 1 -p 1 -y 2019 -l python
+npx @nguyenhuu/adventofcode@latest -d 1 -p 1 -y 2023 -l python
 ```
 ## Hot keys
 * **s** : Using sample.txt as input
