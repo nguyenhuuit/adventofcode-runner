@@ -13,11 +13,11 @@ export const useSolutionFile = (year: string, day: string, part: string, languag
     const file = `./${year}/day${day}/part${part}.${EXTENSIONS[language]}`;
     if (!fs.existsSync(file)) {
       const template = TEMPLATES[language];
-      if (TEMPLATES[language]) {
+      if (template) {
         if (typeof template === 'function') {
-          fs.writeFileSync(file, TEMPLATES[language]({ year, day, part }), { flag: 'as+' });
+          fs.writeFileSync(file, template({ year, day, part }), { flag: 'as+' });
         } else {
-          fs.writeFileSync(file, TEMPLATES[language], { flag: 'as+' });
+          fs.writeFileSync(file, template, { flag: 'as+' });
         }
       }
     }

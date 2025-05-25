@@ -23,5 +23,5 @@ interface AppProfile {
 interface ExecutionResult {
   stdout: string
   stderr: string
-  error: any
+  error: unknown
 }

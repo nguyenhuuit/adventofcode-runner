@@ -8,7 +8,10 @@
   "scripts": {
     "build": "rm -rf dist && tsc && cp -r src/drivers dist",
     "publish": "npm run build && npm publish",
-    "dev": "npm run build && node dist/main.js"
+    "dev": "npm run build && node dist/main.js",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "prepare": "husky"
   },
   "author": "Huu Nguyen <nguyenhuuit@yahoo.com>",
   "license": "MIT",
@@ -40,11 +43,22 @@
   "devDependencies": {
     "@sindresorhus/tsconfig": "7.0.0",
     "@types/ink-spinner": "3.0.4",
+    "@typescript-eslint/eslint-plugin": "8.32.1",
+    "@typescript-eslint/parser": "8.32.1",
     "eslint": "9.27.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
     "ts-node": "10.9.2",
     "typescript": "5.8.3"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }

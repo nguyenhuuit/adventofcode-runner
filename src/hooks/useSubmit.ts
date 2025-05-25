@@ -2,8 +2,13 @@ import axios from "axios";
 import { useCallback } from "react"
 import { HOST } from "../constants.js";
 
-export const useSubmit = (year: string, day: string, part: string, answer: string): () => Promise<any> => {
-  const submit = useCallback<() => Promise<any>>(() => {
+interface SubmitResponse {
+  correct: boolean;
+  waitingTime?: string;
+}
+
+export const useSubmit = (year: string, day: string, part: string, answer: string): () => Promise<SubmitResponse> => {
+  const submit = useCallback<() => Promise<SubmitResponse>>(() => {
     const url = `${HOST}/${year}/day/${day}/answer`;
     const data = `level=${part}&answer=${answer}`;
     return new Promise((resolve, reject) => {

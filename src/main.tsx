@@ -7,6 +7,8 @@ import App from './components/App.js'
 import React from 'react';
 
 dotenv.config()
+// Intentional clear of the console to avoid cluttering the output with previous runs.
+// eslint-disable-next-line no-console
 console.clear()
 
 program

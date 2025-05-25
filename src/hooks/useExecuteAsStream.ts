@@ -9,11 +9,16 @@ interface ExecuteHookInput {
   onClose?: Function
 }
 
-export const useExecuteAsStream = ({ onOutput, onResult, onExecutionTime, onStart, onExit, onClose }: ExecuteHookInput): any => {
+interface ProcessMessage {
+  result: string
+  time: string
+}
+
+export const useExecuteAsStream = ({ onOutput, onResult, onExecutionTime, onStart, onExit, onClose }: ExecuteHookInput) => {
   const execute = (state: ExecutionInput) => {
     onStart && onStart()
     const childProcess = executeAsStream(state)
-    childProcess.on("message", (msg: any) => {
+    childProcess.on("message", (msg: ProcessMessage) => {
       onResult(msg.result + '')
       onExecutionTime(msg.time)
     })

@@ -1,5 +1,12 @@
 import inquirer from "enquirer";
 
+interface PromtOptions {
+  year?: string;
+  day?: string;
+  part?: string;
+  language?: string;
+}
+
 export const LANGUAGE_MAP: { [key: string]: string} = {
   Python: 'python',
   python: 'python',
@@ -13,7 +20,7 @@ export const LANGUAGE_MAP: { [key: string]: string} = {
 };
 
 
-export const validate = async (opts: any) => {
+export const validate = async (opts: PromtOptions) => {
   let { year, day, part, language } = opts;
   if (!language) {
     language = await inquirer.prompt({
@@ -29,7 +36,7 @@ export const validate = async (opts: any) => {
     });
   }
   if (!year) {
-    const rs: any = await inquirer.prompt({
+    const rs: Pick<PromtOptions, 'year'> = await inquirer.prompt({
       type: 'input',
       name: 'year',
       message: 'Select year',
@@ -37,7 +44,7 @@ export const validate = async (opts: any) => {
     year = rs.year
   }
   if (!day) {
-    const rs: any = await inquirer.prompt({
+    const rs: Pick<PromtOptions, 'day'> = await inquirer.prompt({
       type: 'input',
       name: 'day',
       message: 'Select day',
@@ -45,7 +52,7 @@ export const validate = async (opts: any) => {
     day = rs.day
   }
   if (!part) {
-    const rs: any = await inquirer.prompt({
+    const rs: { part: string } = await inquirer.prompt({
       type: 'select',
       name: 'part',
       message: 'Select part',
@@ -54,7 +61,7 @@ export const validate = async (opts: any) => {
         { name: 'Part 2' },
       ]
     });
-    part = (rs.part === 'Part 1' ? 1 : 2);
+    part = (rs.part === 'Part 1' ? '1' : '2');
   }
-  return { year, day, part, language };
+  return { year, day, part, language } as Required<PromtOptions>;
 };

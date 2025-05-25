@@ -27,7 +27,7 @@ const App = ({ state }: Props) => {
 	const [inputMode, setInputMode] = useState(state.inputMode)
 	const [part, setPart] = useState(state.part)
 	const [output, setOutput] = useState(state.output);
-	const [answer, setAnswer] = useState<any>('');
+	const [answer, setAnswer] = useState<string>('');
 	const [perfLog, setPerfLog] = useState('');
 	const [loading, setLoading] = useState(false);
 
@@ -56,7 +56,7 @@ const App = ({ state }: Props) => {
 			}
 			setOutput(msg)
 			setTsUserName(s => s + 1)
-		} catch (err: any) {
+		} catch (err: unknown) {
 			setOutput(chalk.bold(chalk.red(`Cannot submit answer: ${err}`)))
 		} finally {
 			setLoading(false)
@@ -96,6 +96,7 @@ const App = ({ state }: Props) => {
 				terminate();
 				exit();
 				process.exit();
+				break; // Unreachable but satisfies eslint god
 			}
 			case 'i': {
 				setInputMode("input");

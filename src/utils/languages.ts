@@ -31,7 +31,7 @@ func Part${state.part}(input string) interface{} {
 }
 `);
 
-export const TEMPLATES: any = {
+export const TEMPLATES: Record<string, string | Function> = {
   javascript: JAVASCRIPT_TEMPLATE,
   python: PYTHON_TEMPLATE,
   java: JAVA_TEMPLATE,
