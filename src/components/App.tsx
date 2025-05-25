@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Text, useApp, useInput } from 'ink';
-import chokidar from 'chokidar';
+import chokidar, { FSWatcher } from 'chokidar';
 import chalk from 'chalk';
 import Spinner from './Spinner.js';
 import { useSolutionFile } from '../hooks/useSolutionFile.js';
@@ -10,8 +10,9 @@ import { HELP_MESSAGE } from './constants.js';
 import { useYearInfo } from '../hooks/useYearInfo.js';
 import { useSubmit } from '../hooks/useSubmit.js';
 import { useExecuteAsStream } from '../hooks/useExecuteAsStream.js';
+import { EventEmitter } from 'events';
 
-const watcher = chokidar.watch([])
+const watcher = chokidar.watch([]) as FSWatcher & EventEmitter;
 
 type Props = {
 	state: AppState
@@ -65,7 +66,7 @@ const App = ({ state }: Props) => {
 	useEffect(() => {
 		if (!solutionFileName) return;
 		watcher.add(solutionFileName);
-		watcher.removeAllListeners()
+		watcher.removeAllListeners('change')
 		watcher.on('change', async () => {
 			const s = { year: state.year, day: state.day, part, inputMode, language: state.language }
 			setTsSolutionFile(s => s + 1)
@@ -78,7 +79,7 @@ const App = ({ state }: Props) => {
 	useEffect(() => {
 		if (!inputFileName) return;
 		watcher.add(inputFileName);
-		watcher.removeAllListeners()
+		watcher.removeAllListeners('change')
 		watcher.on('change', async () => {
 			const s = { year: state.year, day: state.day, part, inputMode, language: state.language }
 			setTsInputFile(s => s + 1)

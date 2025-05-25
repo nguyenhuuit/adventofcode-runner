@@ -1,13 +1,14 @@
 {
   "name": "@nguyenhuu/adventofcode",
-  "version": "0.0.14",
+  "version": "1.0.0",
   "description": "Advent of Code Runner",
   "main": "dist/main.js",
   "type": "module",
   "repository": "git://github.com/nguyenhuuit/adventofcode-runner.git",
   "scripts": {
     "build": "rm -rf dist && tsc && cp -r src/drivers dist",
-    "publish": "npm run build && npm publish"
+    "publish": "npm run build && npm publish",
+    "dev": "npm run build && node dist/main.js"
   },
   "author": "Huu Nguyen <nguyenhuuit@yahoo.com>",
   "license": "MIT",
@@ -25,23 +26,23 @@
     "cli"
   ],
   "dependencies": {
-    "axios": "1.6.2",
-    "chalk": "5.3.0",
-    "chokidar": "3.5.3",
-    "cli-spinners": "2.9.2",
-    "commander": "11.1.0",
-    "dotenv": "16.3.1",
+    "axios": "1.9.0",
+    "chalk": "5.4.1",
+    "chokidar": "4.0.3",
+    "cli-spinners": "3.2.0",
+    "commander": "14.0.0",
+    "dotenv": "16.5.0",
     "enquirer": "2.4.1",
-    "ink": "4.4.1",
-    "ink-spinner": "^5.0.0",
-    "react": "18.2.0"
+    "ink": "5.2.1",
+    "ink-spinner": "5.0.0",
+    "react": "18.3.1"
   },
   "devDependencies": {
-    "@sindresorhus/tsconfig": "5.0.0",
+    "@sindresorhus/tsconfig": "7.0.0",
     "@types/ink-spinner": "3.0.4",
-    "eslint": "8.54.0",
-    "ts-node": "10.9.1",
-    "typescript": "5.2.2"
+    "eslint": "9.27.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.3"
   },
   "publishConfig": {
     "access": "public"
