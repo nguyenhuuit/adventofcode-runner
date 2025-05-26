@@ -1,4 +1,4 @@
-import { EXTENSIONS } from './languages.js';
+import { EXTENSIONS } from '@utils/languages';
 
 export const getSolutionFile = (state: ExecutionInput): string => {
   const file = `./${state.year}/day${state.day}/part${state.part}.${EXTENSIONS[state.language]}`;

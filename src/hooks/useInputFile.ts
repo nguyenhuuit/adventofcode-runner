@@ -1,7 +1,7 @@
 import axios from 'axios';
 import fs from 'fs';
 import { useEffect, useState } from "react";
-import { HOST, VALID_YEARS } from '../constants.js';
+import { HOST, VALID_YEARS } from '@utils/constants';
 
 const decode = (str: string) => {
   return str

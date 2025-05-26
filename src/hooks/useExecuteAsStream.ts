@@ -1,4 +1,4 @@
-import { executeAsStream } from "../utils/executors.js"
+import { executeAsStream } from "@utils/executors"
 
 interface ExecuteHookInput {
   onOutput: Function

@@ -6,7 +6,7 @@
   "type": "module",
   "repository": "git://github.com/nguyenhuuit/adventofcode-runner.git",
   "scripts": {
-    "build": "rm -rf dist && tsc && cp -r src/drivers dist",
+    "build": "node build.js",
     "publish": "npm run build && npm publish",
     "dev": "npm run build && node dist/main.js",
     "lint": "eslint src --ext .ts,.tsx",
@@ -48,9 +48,10 @@
     "eslint": "9.27.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.5.2",
+    "husky": "9.1.7",
+    "lint-staged": "15.5.2",
     "ts-node": "10.9.2",
+    "tsc-alias": "1.8.16",
     "typescript": "5.8.3"
   },
   "publishConfig": {

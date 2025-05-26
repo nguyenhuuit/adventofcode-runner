@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { EXTENSIONS, TEMPLATES } from '../utils/languages.js'
+import { EXTENSIONS, TEMPLATES } from '@utils/languages'
 import { useEffect, useState } from 'react';
 
 export const useSolutionFile = (year: string, day: string, part: string, language: string, ts: number): AppFile => {

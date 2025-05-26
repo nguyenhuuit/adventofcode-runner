@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from 'axios';
-import { HOST, VALID_YEARS } from "../constants.js";
+import { HOST, VALID_YEARS } from "@utils/constants";
 
 const REGEX_USERNAME = /class="user">(.+?) ?</;
 const REGEX_STAR = /class="star-count">(.+?)\*</;

@@ -1,17 +1,30 @@
 {
 	"extends": "@sindresorhus/tsconfig",
 	"compilerOptions": {
-		"moduleResolution": "NodeNext",
-		"module": "node16",
+		"moduleResolution": "Bundler",
+		"module": "ESNext",
 		"outDir": "dist",
 		"sourceMap": true,
-		"jsx": "react"
+		"jsx": "react",
+		"esModuleInterop": true,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"baseUrl": ".",
+		"paths": {
+			"@utils/*": ["src/utils/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@components/*": ["src/components/*"],
+			"@drivers/*": ["src/drivers/*"]
+		}
 	},
 	"include": ["src"],
 	"ts-node": {
 		"transpileOnly": true,
 		"files": true,
 		"experimentalResolver": true,
-		"experimentalSpecifierResolution": "node"
+		"experimentalSpecifierResolution": "node",
+		"compilerOptions": {
+			"module": "CommonJS"
+		}
 	}
 }

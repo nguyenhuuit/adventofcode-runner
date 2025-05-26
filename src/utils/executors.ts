@@ -1,5 +1,5 @@
 import { execSync, ChildProcess, spawn } from 'child_process';
-import { getInputFile, getSolutionFile } from './misc.js';
+import { getInputFile, getSolutionFile } from '@utils/misc';
 import { fileURLToPath } from 'url';
 import { dirname, resolve, join } from 'path';
 

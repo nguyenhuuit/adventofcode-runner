@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback } from "react"
-import { HOST } from "../constants.js";
+import { HOST } from "@utils/constants";
 
 interface SubmitResponse {
   correct: boolean;

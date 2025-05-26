@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Box, Text, useApp, useInput } from 'ink';
 import chokidar, { FSWatcher } from 'chokidar';
 import chalk from 'chalk';
-import Spinner from './Spinner.js';
-import { useSolutionFile } from '../hooks/useSolutionFile.js';
-import { useInputFile } from '../hooks/useInputFile.js';
-import { terminate } from '../utils/executors.js'
-import { HELP_MESSAGE } from './constants.js';
-import { useYearInfo } from '../hooks/useYearInfo.js';
-import { useSubmit } from '../hooks/useSubmit.js';
-import { useExecuteAsStream } from '../hooks/useExecuteAsStream.js';
+import Spinner from '@components/Spinner';
+import { useSolutionFile } from '@hooks/useSolutionFile';
+import { useInputFile } from '@hooks/useInputFile';
+import { terminate } from '@utils/executors'
+import { HELP_MESSAGE } from '@components/constants';
+import { useYearInfo } from '@hooks/useYearInfo';
+import { useSubmit } from '@hooks/useSubmit';
+import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
 import { EventEmitter } from 'events';
 
 const watcher = chokidar.watch([]) as FSWatcher & EventEmitter;
