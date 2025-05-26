@@ -1,5 +1,4 @@
 import { Option, program } from 'commander';
-import dotenv from 'dotenv';
 
 import React from 'react';
 
@@ -9,7 +8,6 @@ import { LANGUAGE_MAP, validate } from '@utils/prompter';
 
 import App from '@components/App';
 
-dotenv.config();
 // Intentional clear of the console to avoid cluttering the output with previous runs.
 // eslint-disable-next-line no-console
 console.clear();

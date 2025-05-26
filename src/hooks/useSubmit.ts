@@ -1,8 +1,6 @@
-import axios from 'axios';
-
 import { useCallback } from 'react';
 
-import { HOST } from '@utils/constants';
+import axios from '@utils/axios';
 
 interface SubmitResponse {
   correct: boolean;
@@ -16,22 +14,18 @@ export const useSubmit = (
   answer: string
 ): (() => Promise<SubmitResponse>) => {
   const submit = useCallback<() => Promise<SubmitResponse>>(() => {
-    const url = `${HOST}/${year}/day/${day}/answer`;
+    const url = `/${year}/day/${day}/answer`;
     const data = `level=${part}&answer=${answer}`;
     return new Promise((resolve, reject) => {
-      const SESSION = process.env['SESSION'];
-      if (!SESSION) {
+      if (!axios) {
         return reject('Invalid SESSION');
       }
-      axios({
-        method: 'POST',
-        url,
-        data,
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          cookie: `session=${SESSION};`,
-        },
-      })
+      axios
+        .post(url, data, {
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+        })
         .then((resp) => {
           let matches = resp.data.match(/(That's (not )?the right answer)/);
           if (matches) {

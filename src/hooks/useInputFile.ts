@@ -1,9 +1,9 @@
-import axios from 'axios';
 import fs from 'fs';
 
 import { useEffect, useState } from 'react';
 
-import { HOST, VALID_YEARS } from '@utils/constants';
+import axios from '@utils/axios';
+import { VALID_YEARS } from '@utils/constants';
 
 const decode = (str: string) => {
   return str
@@ -44,15 +44,9 @@ export const useInputFile = (year: string, day: string, inp: string, ts: number)
     if (!VALID_YEARS.includes(year)) {
       return;
     }
-    if (stats.size === 0 && inp === 'input' && process.env['SESSION']) {
-      const url = `${HOST}/${year}/day/${day}/input`;
-      axios({
-        method: 'GET',
-        url,
-        headers: {
-          cookie: `session=${process.env['SESSION']};`,
-        },
-      }).then((res) => {
+    if (stats.size === 0 && inp === 'input' && axios) {
+      const url = `/${year}/day/${day}/input`;
+      axios.get(url).then((res) => {
         if (res.data) {
           fs.writeFileSync(file, res.data);
           const stats = fs.statSync(file);
@@ -60,15 +54,9 @@ export const useInputFile = (year: string, day: string, inp: string, ts: number)
         }
       });
     }
-    if (stats.size === 0 && inp === 'sample' && process.env['SESSION']) {
-      const url = `${HOST}/${year}/day/${day}`;
-      axios({
-        method: 'GET',
-        url,
-        headers: {
-          cookie: `session=${process.env['SESSION']};`,
-        },
-      }).then((res) => {
+    if (stats.size === 0 && inp === 'sample' && axios) {
+      const url = `/${year}/day/${day}`;
+      axios.get(url).then((res) => {
         if (res.data) {
           const SAMPLE_REGEX = /<code>(<em>)?([\s\S]+?)(<\/em>)?<\/code>/g;
           const matches = res.data.match(SAMPLE_REGEX);
