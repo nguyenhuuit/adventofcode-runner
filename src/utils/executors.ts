@@ -1,22 +1,23 @@
-import { execSync, ChildProcess, spawn } from 'child_process';
-import { getInputFile, getSolutionFile } from '@utils/misc';
+import { ChildProcess, execSync, spawn } from 'child_process';
+import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { dirname, resolve, join } from 'path';
+
+import { getInputFile, getSolutionFile } from '@utils/misc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const dir = resolve(join(__dirname, '..'))
+const dir = resolve(join(__dirname, '..'));
 
 let childProcess: ChildProcess;
 
 export const terminate = (): void => {
   if (childProcess && childProcess instanceof ChildProcess && !childProcess.killed) {
-    childProcess.kill('SIGKILL')
+    childProcess.kill('SIGKILL');
   }
-}
+};
 
 export const executeAsStream = (state: ExecutionInput): ChildProcess => {
-  terminate()
+  terminate();
   switch (state.language) {
     case 'javascript': {
       return executeJavascript(state);
@@ -30,43 +31,46 @@ export const executeAsStream = (state: ExecutionInput): ChildProcess => {
     case 'java': {
       return executeJava(state);
     }
-    default: throw Error('Unknown language');
+    default:
+      throw Error('Unknown language');
   }
 };
-  
+
 const executeJava = (state: ExecutionInput): ChildProcess => {
   const solutionFile = getSolutionFile(state);
   const inputFile = getInputFile(state);
   execSync(`javac -d ${dir}/drivers/java ${solutionFile}`);
   childProcess = spawn(
     'java',
-    ['-cp', 'gson-2.10.1.jar:.', 'JavaRunner', inputFile.replace("./", resolve('./') + '/')],
+    ['-cp', 'gson-2.10.1.jar:.', 'JavaRunner', inputFile.replace('./', resolve('./') + '/')],
     {
       cwd: dir + '/drivers/java',
-      stdio: ['pipe', 'pipe', 'pipe', 'ipc']}
-  )
-  return childProcess
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+    }
+  );
+  return childProcess;
 };
 
 const executePython = (state: ExecutionInput): ChildProcess => {
   childProcess = spawn(
     'python3',
-    ['-u', dir + '/drivers/python/python.py', state.year ,state.day, state.part, state.inputMode],
+    ['-u', dir + '/drivers/python/python.py', state.year, state.day, state.part, state.inputMode],
     {
-      stdio: ['pipe', 'pipe', 'pipe', 'ipc']
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
     }
-  )
-  return childProcess
-}
+  );
+  return childProcess;
+};
 
 const executeJavascript = (state: ExecutionInput) => {
-  childProcess = spawn('node',
+  childProcess = spawn(
+    'node',
     [dir + '/drivers/javascript/javascript.js', state.year, state.day, state.part, state.inputMode],
     {
-      stdio: ['pipe', 'pipe', 'pipe', 'ipc']
-    },
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+    }
   );
-  return childProcess
+  return childProcess;
 };
 
 const executeGolang = (state: ExecutionInput): ChildProcess => {
@@ -78,8 +82,8 @@ const executeGolang = (state: ExecutionInput): ChildProcess => {
     ['run', dir + '/drivers/golang/golang.go', inputFile, `${dir}/drivers/golang/golang.so`],
     {
       cwd: '.',
-      stdio: ['pipe', 'pipe', 'pipe', 'ipc']
-    },
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+    }
   );
-  return childProcess
+  return childProcess;
 };

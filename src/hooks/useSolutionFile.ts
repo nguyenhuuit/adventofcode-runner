@@ -1,10 +1,18 @@
-import fs from 'fs'
-import { EXTENSIONS, TEMPLATES } from '@utils/languages'
+import fs from 'fs';
+
 import { useEffect, useState } from 'react';
 
-export const useSolutionFile = (year: string, day: string, part: string, language: string, ts: number): AppFile => {
-  const [name, setName] = useState<string>('')
-  const [size, setSize] = useState<number>(0)
+import { EXTENSIONS, TEMPLATES } from '@utils/languages';
+
+export const useSolutionFile = (
+  year: string,
+  day: string,
+  part: string,
+  language: string,
+  ts: number
+): AppFile => {
+  const [name, setName] = useState<string>('');
+  const [size, setSize] = useState<number>(0);
   useEffect(() => {
     const dir = `./${year}/day${day}/`;
     if (!fs.existsSync(dir)) {
@@ -21,9 +29,9 @@ export const useSolutionFile = (year: string, day: string, part: string, languag
         }
       }
     }
-    const stats = fs.statSync(file)
-    setName(file)
+    const stats = fs.statSync(file);
+    setName(file);
     setSize(stats.size);
   }, [year, day, part, language, ts]);
   return { name, size };
-}
+};

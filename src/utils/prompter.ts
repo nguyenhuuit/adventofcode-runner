@@ -1,4 +1,4 @@
-import inquirer from "enquirer";
+import inquirer from 'enquirer';
 
 interface PromtOptions {
   year?: string;
@@ -7,7 +7,7 @@ interface PromtOptions {
   language?: string;
 }
 
-export const LANGUAGE_MAP: { [key: string]: string} = {
+export const LANGUAGE_MAP: { [key: string]: string } = {
   Python: 'python',
   python: 'python',
   Javascript: 'javascript',
@@ -16,23 +16,17 @@ export const LANGUAGE_MAP: { [key: string]: string} = {
   java: 'java',
   go: 'go',
   golang: 'go',
-  'C++': 'app'
+  'C++': 'app',
 };
-
 
 export const validate = async (opts: PromtOptions) => {
   let { year, day, part, language } = opts;
   if (!language) {
     language = await inquirer.prompt({
-      type: "select",
+      type: 'select',
       name: 'language',
       message: 'Select programming language',
-      choices: [
-        { name: 'Python' },
-        { name: 'Javascript' },
-        { name: 'Java' },
-        { name: 'C++' },
-      ]
+      choices: [{ name: 'Python' }, { name: 'Javascript' }, { name: 'Java' }, { name: 'C++' }],
     });
   }
   if (!year) {
@@ -41,7 +35,7 @@ export const validate = async (opts: PromtOptions) => {
       name: 'year',
       message: 'Select year',
     });
-    year = rs.year
+    year = rs.year;
   }
   if (!day) {
     const rs: Pick<PromtOptions, 'day'> = await inquirer.prompt({
@@ -49,19 +43,16 @@ export const validate = async (opts: PromtOptions) => {
       name: 'day',
       message: 'Select day',
     });
-    day = rs.day
+    day = rs.day;
   }
   if (!part) {
     const rs: { part: string } = await inquirer.prompt({
       type: 'select',
       name: 'part',
       message: 'Select part',
-      choices: [
-        { name: 'Part 1' },
-        { name: 'Part 2' },
-      ]
+      choices: [{ name: 'Part 1' }, { name: 'Part 2' }],
     });
-    part = (rs.part === 'Part 1' ? '1' : '2');
+    part = rs.part === 'Part 1' ? '1' : '2';
   }
   return { year, day, part, language } as Required<PromtOptions>;
 };

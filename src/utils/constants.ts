@@ -8,7 +8,7 @@ export const VALID_YEARS = [
   '2021',
   '2022',
   '2023',
-  '2024'
+  '2024',
 ];
 
 export const HOST = 'https://adventofcode.com';

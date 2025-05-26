@@ -1,15 +1,18 @@
+import { Option, program } from 'commander';
 import dotenv from 'dotenv';
-import { render } from 'ink';
-import { program, Option } from 'commander';
 
-import { validate, LANGUAGE_MAP } from '@utils/prompter';
-import App from '@components/App';
 import React from 'react';
 
-dotenv.config()
+import { render } from 'ink';
+
+import { LANGUAGE_MAP, validate } from '@utils/prompter';
+
+import App from '@components/App';
+
+dotenv.config();
 // Intentional clear of the console to avoid cluttering the output with previous runs.
 // eslint-disable-next-line no-console
-console.clear()
+console.clear();
 
 program
   .addOption(new Option('-y, --year <year>'))
@@ -20,7 +23,7 @@ program
 program.parse();
 
 validate(program.opts())
-  .then(result => {
+  .then((result) => {
     const { year, day, part, language } = result;
     const initialState: AppState = {
       inputMode: 'sample',
@@ -29,16 +32,10 @@ validate(program.opts())
       year,
       day,
       part,
-      language: LANGUAGE_MAP[language] || 'python'
+      language: LANGUAGE_MAP[language] || 'python',
     };
-    render(
-      <App state={initialState}/>
-    );
+    render(<App state={initialState} />);
   })
   .catch(() => {
-    process.exit(1)
+    process.exit(1);
   });
-
-
-
-
