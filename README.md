@@ -1,47 +1,178 @@
-# [Advent of Code](https://adventofcode.com/)
-## Get started
-Save your `session` cookie into `.env` file in the root folder as below:
+# Advent of Code Runner
+
+[![npm](https://img.shields.io/npm/v/@nguyenhuu/adventofcode?color=lightgreen&label=npm&logo=npm&style=flat)](https://www.npmjs.com/package/@nguyenhuu/adventofcode)
+[![Node.js CI](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/test.yml/badge.svg)](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://github.com/nguyenhuuit/adventofcode-runner)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome!-6f42c1?style=flat&logo=github&logoColor=white)](https://github.com/nguyenhuuit/adventofcode-runner/pulls)
+
+A CLI tool to help you run and test your Advent of Code solutions across different programming languages.
+
+## Features
+
+- 🚀 Run solutions in multiple languages (Python, JavaScript, Java, C++)
+- 🔄 Watch mode for automatic re-runs
+- 🎨 Beautiful terminal UI with spinners and colors
+- 🧪 Test your solutions with sample inputs
+- 📊 Track your progress and performance
+
+## Installation
+
+```bash
+npm install -g @nguyenhuu/adventofcode
+```
+
+## Setup
+
+Save your `session` cookie into `.env` file in the root folder:
 ```
 SESSION=f8fe3ed61...
 ```
-> The `session` cookie can be found in Developer Tools > Application tab > Cookies > `https://adventofcode.com`, of course, we need to log in to have it.
 
-Start solving problems
-```
+> The `session` cookie can be found in Developer Tools > Application tab > Cookies > `https://adventofcode.com` (requires login)
 
-npx @nguyenhuu/adventofcode@latest -d <day> -p <part> -y <year> -l <language>
-```
-Example:
-```
-npx @nguyenhuu/adventofcode@latest -d 1 -p 1 -y 2023 -l python
-```
-The folder structure would be:
-```
-current
-  ├── 2023
-  │  └── day1
-  │     ├── sample.txt
-  │     └── part1.py
-  └── .env
-  
+## Usage
+
+### Basic Examples
+
+```bash
+# Run a Python solution for Day 1, Part 1 of 2023
+adventofcode --year 2023 --day 1 --part 1 --language python
+
+# Run a JavaScript solution for Day 2, Part 2 of 2023
+adventofcode --year 2023 --day 2 --part 2 --language javascript
+
+# Run a Java solution for Day 3, Part 1 of 2022
+adventofcode --year 2022 --day 3 --part 1 --language java
 ```
 
-## Hot keys
-* **s** : Using sample.txt as input
-* **i** : Using input.txt as input
-* **u** : Submit the most recent result
-* **0** ->  **9** : Select part
-* **c** : Clear terminal
-* **q** : Quit program
-* **x** : Terminate solution
-* **Enter** : Re-run solution
-* **h** : Show helps
+### Interactive Mode
+
+```bash
+# Start interactive mode
+adventofcode
+
+# The tool will prompt for missing information:
+? Select programming language: (Use arrow keys)
+❯ Python 
+  Javascript 
+  Java 
+  C++ 
+? Select year: 2023
+? Select day: 1
+? Select part: (Use arrow keys)
+❯ Part 1 
+  Part 2 
+```
+
+### Using Sample Input
+
+1. Create a `sample.txt` file in your solution directory:
+```
+current/
+└── 2023/
+    └── day1/
+        ├── sample.txt    # Your test input
+        └── part1.py      # Your solution
+```
+
+2. Press `s` during runtime to use sample input
+
+### Submitting Solutions
+
+1. Run your solution
+2. Press `u` to submit the result
+3. The tool will:
+   - Submit your answer
+   - Show if it's correct
+   - Display your progress
+
+### Options
+
+- `--year`: The year of the challenge (e.g., 2023)
+- `--day`: The day of the challenge (1-25)
+- `--part`: The part of the challenge (1 or 2)
+- `--language`: Programming language (python, javascript, java, cpp)
+- `--help`: Show help information
+
+### Hotkeys
+
+- **s**: Use sample.txt as input
+- **i**: Use input.txt as input
+- **u**: Submit the most recent result
+- **0-9**: Select part
+- **c**: Clear terminal
+- **q**: Quit program
+- **x**: Terminate solution
+- **Enter**: Re-run solution
+- **h**: Show help
+
+### Folder Structure
+
+```
+current/
+├── 2023/
+│   └── day1/
+│       ├── sample.txt
+│       └── part1.py
+└── .env
+```
 
 ![demo](https://cdn.huu.app/images/adventofcode-runner.png)
 
-## Supported languages
-> Need an installed runtime!
-* Javascript `.mjs`
-* Python `.py`
-* Golang `.go` 
-* Java `.java`
+## Development
+
+### Prerequisites
+
+- Node.js >= 20
+- npm >= 10
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/nguyenhuuit/adventofcode-runner.git
+cd adventofcode-runner
+
+# Install dependencies
+npm install
+
+# Build the project
+npm run build
+```
+
+### Available Scripts
+
+- `npm run build` - Build the project
+- `npm run dev` - Run in development mode
+- `npm run test` - Run tests
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
+
+### Project Structure
+
+```
+src/
+├── components/     # React components for UI
+├── drivers/        # Language-specific drivers
+├── hooks/          # React hooks
+└── utils/          # Utility functions
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Huu Nguyen <nguyenhuuit@yahoo.com>
