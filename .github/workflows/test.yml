@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,16 +26,5 @@ jobs:
     - name: Install dependencies
       run: npm ci
     
-    - name: Build
-      run: npm run build
-    
-    - name: Verify build output
-      run: |
-        # Check if dist directory exists
-        test -d dist
-        
-        # Check if main.js exists
-        test -f dist/main.js
-        
-        # Check if drivers directory was copied
-        test -d dist/drivers
+    - name: Run tests
+      run: npm test 

@@ -22,12 +22,13 @@ export const LANGUAGE_MAP: { [key: string]: string } = {
 export const validate = async (opts: PromtOptions) => {
   let { year, day, part, language } = opts;
   if (!language) {
-    language = await inquirer.prompt({
+    const selectedLanguage: { language: string } = await inquirer.prompt({
       type: 'select',
       name: 'language',
       message: 'Select programming language',
       choices: [{ name: 'Python' }, { name: 'Javascript' }, { name: 'Java' }, { name: 'C++' }],
     });
+    language = LANGUAGE_MAP[selectedLanguage.language] || 'python';
   }
   if (!year) {
     const rs: Pick<PromtOptions, 'year'> = await inquirer.prompt({

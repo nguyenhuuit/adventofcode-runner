@@ -18,6 +18,7 @@
 		}
 	},
 	"include": ["src"],
+	"exclude": [ "**/*/__tests__/**/*"],
 	"ts-node": {
 		"transpileOnly": true,
 		"files": true,
