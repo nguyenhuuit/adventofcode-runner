@@ -10,7 +10,6 @@
   },
   "scripts": {
     "build": "node build.js",
-    "publish": "npm run build && npm publish",
     "dev": "npm run build && node dist/main.js",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
