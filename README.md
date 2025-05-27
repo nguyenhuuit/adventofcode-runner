@@ -1,7 +1,7 @@
 # Advent of Code Runner
 
 [![npm](https://img.shields.io/npm/v/@nguyenhuu/adventofcode?color=lightgreen&label=npm&logo=npm&style=flat)](https://www.npmjs.com/package/@nguyenhuu/adventofcode)
-[![Node.js CI](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/test.yml/badge.svg)](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/test.yml)
+[![Node.js CI](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/publish-canary.yml/badge.svg)](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/publish-canary.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://github.com/nguyenhuuit/adventofcode-runner)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome!-6f42c1?style=flat&logo=github&logoColor=white)](https://github.com/nguyenhuuit/adventofcode-runner/pulls)
@@ -18,8 +18,24 @@ A CLI tool to help you run and test your Advent of Code solutions across differe
 
 ## Installation
 
+You can use the tool in two ways:
+
+### Option 1: Using npx (Recommended)
 ```bash
+# Run directly without installation
+npx @nguyenhuu/adventofcode
+
+# Or with specific command
+npx @nguyenhuu/adventofcode --year 2024 --day 1 --part 1 --language python
+```
+
+### Option 2: Global Installation
+```bash
+# Install globally
 npm install -g @nguyenhuu/adventofcode
+
+# Run the tool
+adventofcode
 ```
 
 ## Setup
@@ -36,20 +52,20 @@ SESSION=f8fe3ed61...
 ### Basic Examples
 
 ```bash
-# Run a Python solution for Day 1, Part 1 of 2023
-adventofcode --year 2023 --day 1 --part 1 --language python
+# Using npx
+npx @nguyenhuu/adventofcode --year 2024 --day 1 --part 1 --language python
 
-# Run a JavaScript solution for Day 2, Part 2 of 2023
-adventofcode --year 2023 --day 2 --part 2 --language javascript
-
-# Run a Java solution for Day 3, Part 1 of 2022
-adventofcode --year 2022 --day 3 --part 1 --language java
+# Or with global installation
+adventofcode --year 2024 --day 1 --part 1 --language python
 ```
 
 ### Interactive Mode
 
 ```bash
-# Start interactive mode
+# Using npx
+npx @nguyenhuu/adventofcode
+
+# Or with global installation
 adventofcode
 
 # The tool will prompt for missing information:
@@ -58,7 +74,7 @@ adventofcode
   Javascript 
   Java 
   C++ 
-? Select year: 2023
+? Select year: 2024
 ? Select day: 1
 ? Select part: (Use arrow keys)
 ❯ Part 1 
