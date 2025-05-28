@@ -68,6 +68,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
-          name: "Release ${{ steps.set-version.outputs.version }}"
+          name: "Release v$TAG_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
