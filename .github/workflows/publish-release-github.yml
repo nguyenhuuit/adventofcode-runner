@@ -1,9 +1,13 @@
-name: Publish Release
+name: Publish Release to GitHub Packages
 
 on:
   push:
     tags:
       - 'v*'
+
+permissions:
+  packages: write
+  contents: write
 
 jobs:
   publish-release:
@@ -22,8 +26,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@nguyenhuuit'
           cache: 'npm'
+
+      - name: Update package.json
+        run: npm pkg set name="@nguyenhuuit/adventofcode"
 
       - name: Install dependencies
         run: npm ci
@@ -51,7 +59,15 @@ jobs:
           
           echo "Publishing version: $TAG_VERSION"
 
-      - name: Publish to npm
-        run: npm publish --access public
+      - name: Publish to GitHub Packages
+        run: npm publish --access public --tag canary --registry https://npm.pkg.github.com
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          name: "Release ${{ steps.set-version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

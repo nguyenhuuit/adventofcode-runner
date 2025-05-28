@@ -6,7 +6,6 @@ on:
       - main
 
 jobs:
-
   publish-canary:
     runs-on: ubuntu-latest
     timeout-minutes: 5

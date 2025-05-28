@@ -1,6 +1,6 @@
 {
   "name": "@nguyenhuu/adventofcode",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Advent of Code Runner",
   "main": "dist/main.js",
   "type": "module",
