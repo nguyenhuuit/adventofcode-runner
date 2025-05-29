@@ -10,7 +10,7 @@ A CLI tool to help you run and test your Advent of Code solutions across differe
 
 ## Features
 
-- 🚀 Run solutions in multiple languages (Python, JavaScript, Java, C++)
+- 🚀 Run solutions in multiple languages (Python, JavaScript, Java, C++, Ruby)
 - 🔄 Watch mode for automatic re-runs
 - 🎨 Beautiful terminal UI with spinners and colors
 - 🧪 Test your solutions with sample inputs
@@ -74,6 +74,7 @@ adventofcode
   Javascript 
   Java 
   C++ 
+  Ruby
 ? Select year: 2024
 ? Select day: 1
 ? Select part: (Use arrow keys)

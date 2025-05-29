@@ -49,7 +49,13 @@ describe('prompter', () => {
         type: 'select',
         name: 'language',
         message: 'Select programming language',
-        choices: [{ name: 'Python' }, { name: 'Javascript' }, { name: 'Java' }, { name: 'C++' }],
+        choices: [
+          { name: 'Python' },
+          { name: 'Javascript' },
+          { name: 'Java' },
+          { name: 'C++' },
+          { name: 'Ruby' },
+        ],
       });
     });
 

@@ -3,10 +3,26 @@ export const EXTENSIONS: { [key: string]: string } = {
   python: 'py',
   java: 'java',
   go: 'go',
+  ruby: 'rb',
+  cpp: 'cpp',
 };
+
+const CPP_TEMPLATE = `#include <iostream>
+
+using namespace std;
+
+string solution(const string& input_content) {
+    return "0";
+}
+`;
 
 const PYTHON_TEMPLATE = `def solution(input):
   pass
+`;
+
+const RUBY_TEMPLATE = `def solution(input)
+  return nil
+end
 `;
 
 const JAVASCRIPT_TEMPLATE = `export const solution = input => {
@@ -33,4 +49,6 @@ export const TEMPLATES: Record<string, string | Function> = {
   python: PYTHON_TEMPLATE,
   java: JAVA_TEMPLATE,
   go: GO_TEMPLATE,
+  cpp: CPP_TEMPLATE,
+  ruby: RUBY_TEMPLATE,
 };

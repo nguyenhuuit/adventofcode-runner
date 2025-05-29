@@ -7,6 +7,8 @@ interface PromtOptions {
   language?: string;
 }
 
+export const DEFAULT_LANGUAGE = 'python';
+
 export const LANGUAGE_MAP: { [key: string]: string } = {
   Python: 'python',
   python: 'python',
@@ -16,7 +18,10 @@ export const LANGUAGE_MAP: { [key: string]: string } = {
   java: 'java',
   go: 'go',
   golang: 'go',
-  'C++': 'app',
+  'C++': 'cpp',
+  cpp: 'cpp',
+  Ruby: 'ruby',
+  ruby: 'ruby',
 };
 
 export const validate = async (opts: PromtOptions) => {
@@ -26,9 +31,15 @@ export const validate = async (opts: PromtOptions) => {
       type: 'select',
       name: 'language',
       message: 'Select programming language',
-      choices: [{ name: 'Python' }, { name: 'Javascript' }, { name: 'Java' }, { name: 'C++' }],
+      choices: [
+        { name: 'Python' },
+        { name: 'Javascript' },
+        { name: 'Java' },
+        { name: 'C++' },
+        { name: 'Ruby' },
+      ],
     });
-    language = LANGUAGE_MAP[selectedLanguage.language] || 'python';
+    language = LANGUAGE_MAP[selectedLanguage.language] || DEFAULT_LANGUAGE;
   }
   if (!year) {
     const rs: Pick<PromtOptions, 'year'> = await inquirer.prompt({

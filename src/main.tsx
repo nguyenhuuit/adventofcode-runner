@@ -4,7 +4,7 @@ import React from 'react';
 
 import { render } from 'ink';
 
-import { LANGUAGE_MAP, validate } from '@utils/prompter';
+import { validate } from '@utils/prompter';
 
 import App from '@components/App';
 
@@ -14,7 +14,7 @@ console.clear();
 
 program
   .addOption(new Option('-y, --year <year>'))
-  .addOption(new Option('-l, --language <language>').default('python'))
+  .addOption(new Option('-l, --language <language>'))
   .addOption(new Option('-d, --day <day>'))
   .addOption(new Option('-p, --part <part>'));
 
@@ -30,7 +30,7 @@ validate(program.opts())
       year,
       day,
       part,
-      language: LANGUAGE_MAP[language] || 'python',
+      language,
     };
     render(<App state={initialState} />);
   })

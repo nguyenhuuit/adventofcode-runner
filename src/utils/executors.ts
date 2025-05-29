@@ -25,15 +25,32 @@ export const executeAsStream = (state: ExecutionInput): ChildProcess => {
     case 'python': {
       return executePython(state);
     }
+    case 'ruby': {
+      return executeRuby(state);
+    }
     case 'go': {
       return executeGolang(state);
     }
     case 'java': {
       return executeJava(state);
     }
+    case 'cpp': {
+      return executeCpp(state);
+    }
     default:
       throw Error('Unknown language');
   }
+};
+
+const executeCpp = (state: ExecutionInput): ChildProcess => {
+  const solutionFile = getSolutionFile(state);
+  const inputFile = getInputFile(state);
+  execSync(`g++ -o ${dir}/drivers/cpp/cpp ${dir}/drivers/cpp/main.cpp ${solutionFile}`);
+  childProcess = spawn(dir + '/drivers/cpp/cpp', [inputFile.replace('./', resolve('./') + '/')], {
+    cwd: dir + '/drivers/cpp',
+    stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+  });
+  return childProcess;
 };
 
 const executeJava = (state: ExecutionInput): ChildProcess => {
@@ -56,6 +73,18 @@ const executePython = (state: ExecutionInput): ChildProcess => {
     'python3',
     ['-u', dir + '/drivers/python/python.py', state.year, state.day, state.part, state.inputMode],
     {
+      stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
+    }
+  );
+  return childProcess;
+};
+
+const executeRuby = (state: ExecutionInput): ChildProcess => {
+  childProcess = spawn(
+    'ruby',
+    [dir + '/drivers/ruby/ruby.rb', state.year, state.day, state.part, state.inputMode],
+    {
+      cwd: dir,
       stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
     }
   );
