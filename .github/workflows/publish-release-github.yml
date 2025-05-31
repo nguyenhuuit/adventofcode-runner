@@ -70,6 +70,9 @@ jobs:
           TAG_VERSION=${GITHUB_REF#refs/tags/v}
           pnpm version $TAG_VERSION --no-git-tag-version --allow-same-version
           
+          # Set output for use in subsequent steps
+          echo "version=$TAG_VERSION" >> $GITHUB_OUTPUT
+          
           echo "Publishing version: $TAG_VERSION"
 
       - name: Publish to GitHub Packages
@@ -81,6 +84,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
-          name: "Release v${{ env.TAG_VERSION }}"
+          name: "Release v${{ steps.set-version.outputs.version }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
