@@ -7,6 +7,7 @@ interface ExecuteHookInput {
   onStart?: Function;
   onExit?: Function;
   onClose?: Function;
+  baseDir: string;
 }
 
 interface ProcessMessage {
@@ -21,10 +22,11 @@ export const useExecuteAsStream = ({
   onStart,
   onExit,
   onClose,
+  baseDir,
 }: ExecuteHookInput) => {
-  const execute = (state: ExecutionInput) => {
+  const execute = (state: Omit<ExecutionInput, 'baseDir'>) => {
     onStart && onStart();
-    const childProcess = executeAsStream(state);
+    const childProcess = executeAsStream({ ...state, baseDir });
     childProcess.on('message', (msg: ProcessMessage) => {
       onResult(msg.result + '');
       onExecutionTime(msg.time);

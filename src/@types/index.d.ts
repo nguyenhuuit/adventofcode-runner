@@ -6,9 +6,13 @@ interface AppState {
   inputMode: string;
   answer: string;
   output: string;
+  baseDir: string;
 }
 
-type ExecutionInput = Pick<AppState, 'year' | 'day' | 'part' | 'inputMode' | 'language'>;
+type ExecutionInput = Pick<
+  AppState,
+  'year' | 'day' | 'part' | 'inputMode' | 'language' | 'baseDir'
+>;
 
 interface AppFile {
   name: string;

@@ -18,6 +18,18 @@ A CLI tool to help you run and test your Advent of Code solutions across differe
 
 ## Installation
 
+This project uses pnpm for package management. If you haven't installed pnpm yet, you can do so globally with:
+
+```bash
+npm install -g pnpm
+```
+
+Then, install the project dependencies:
+
+```bash
+pnpm install
+```
+
 You can use the tool in two ways:
 
 ### Option 1: Using npx (Recommended)
@@ -160,14 +172,13 @@ npm run build
 
 ### Available Scripts
 
-- `npm run build` - Build the project
-- `npm run start` - Build and run the project
-- `npm run start:dev` - Run in development mode
-- `npm run test` - Run tests
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
-- `npm run format` - Format code with Prettier
-- `npm run format:check` - Check code formatting
+- `pnpm start`: Builds the project and runs the main script.
+- `pnpm start:dev`: Runs the project in development mode.
+- `pnpm lint`: Lints the source files.
+- `pnpm lint:fix`: Lints and fixes issues in the source files.
+- `pnpm format`: Formats the source files using Prettier.
+- `pnpm format:check`: Checks if the source files are formatted correctly.
+- `pnpm test`: Runs the tests using Jest.
 
 ### Project Structure
 

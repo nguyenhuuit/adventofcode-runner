@@ -28,39 +28,52 @@ jobs:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@nguyenhuuit'
-          cache: 'npm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Update package.json
-        run: npm pkg set name="@nguyenhuuit/adventofcode"
+        run: pnpm pkg set name="@nguyenhuuit/adventofcode"
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
 
       - name: Build
-        run: npm run build
+        run: pnpm build
 
       - name: Set version from tag
         id: set-version
         run: |
           # Remove 'v' prefix from tag name
           TAG_VERSION=${GITHUB_REF#refs/tags/v}
-          # Get version from package.json
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          
-          echo "Tag version: $TAG_VERSION"
-          echo "Package version: $PKG_VERSION"
-          
-          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
-            echo "Versions differ, updating package.json version"
-            npm version $TAG_VERSION --no-git-tag-version
-          else
-            echo "Versions match, skipping npm version update"
-          fi
+          pnpm version $TAG_VERSION --no-git-tag-version --allow-same-version
           
           echo "Publishing version: $TAG_VERSION"
 
       - name: Publish to GitHub Packages
-        run: npm publish --access public --tag canary --registry https://npm.pkg.github.com
+        run: pnpm publish --access public --tag canary --registry https://npm.pkg.github.com --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
 
@@ -68,6 +81,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
-          name: "Release v$TAG_VERSION"
+          name: "Release v${{ env.TAG_VERSION }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

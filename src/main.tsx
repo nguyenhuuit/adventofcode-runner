@@ -1,4 +1,6 @@
 import { Option, program } from 'commander';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 import React from 'react';
 
@@ -7,6 +9,9 @@ import { render } from 'ink';
 import { validate } from '@utils/prompter';
 
 import App from '@components/App';
+
+const __filename = fileURLToPath(import.meta.url);
+const baseDir = dirname(__filename);
 
 // Intentional clear of the console to avoid cluttering the output with previous runs.
 // eslint-disable-next-line no-console
@@ -31,6 +36,7 @@ validate(program.opts())
       day,
       part,
       language,
+      baseDir,
     };
     render(<App state={initialState} />);
   })

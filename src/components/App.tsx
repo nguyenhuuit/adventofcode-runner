@@ -6,6 +6,8 @@ import React, { useEffect, useState } from 'react';
 
 import { Box, Text, useApp, useInput } from 'ink';
 
+import type { Key } from 'ink';
+
 import { terminate } from '@utils/executors';
 
 import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
@@ -24,9 +26,10 @@ type Props = {
 };
 
 const App = ({ state }: Props) => {
+  const { baseDir } = state;
   const { exit } = useApp();
 
-  const [tsUserName, setTsUserName] = useState(0);
+  const [tsUserName, setTsUserName] = useState<number>(0);
   const { userName, star } = useYearInfo(state.year, tsUserName);
 
   const [inputMode, setInputMode] = useState(state.inputMode);
@@ -36,7 +39,7 @@ const App = ({ state }: Props) => {
   const [perfLog, setPerfLog] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const [tsSolutionFile, setTsSolutionFile] = useState(0);
+  const [tsSolutionFile, setTsSolutionFile] = useState<number>(0);
   const { name: solutionFileName, size: solutionFileSize } = useSolutionFile(
     state.year,
     state.day,
@@ -53,7 +56,8 @@ const App = ({ state }: Props) => {
   );
 
   const executeSolution = useExecuteAsStream({
-    onOutput: (s: string) => setOutput((current) => (current ? current + s : s)),
+    baseDir,
+    onOutput: (s: string) => setOutput((current: string) => (current ? current + s : s)),
     onResult: (s: string) => setAnswer(s),
     onExecutionTime: (s: string) => setPerfLog(s),
     onStart: () => {
@@ -76,7 +80,7 @@ const App = ({ state }: Props) => {
         msg += chalk.bold(chalk.redBright(` Waiting ${waitingTime} ⏳`));
       }
       setOutput(msg);
-      setTsUserName((s) => s + 1);
+      setTsUserName((s: number) => s + 1);
     } catch (err: unknown) {
       setOutput(chalk.bold(chalk.red(`Cannot submit answer: ${err}`)));
     } finally {
@@ -90,7 +94,7 @@ const App = ({ state }: Props) => {
     watcher.removeAllListeners('change');
     watcher.on('change', async () => {
       const s = { year: state.year, day: state.day, part, inputMode, language: state.language };
-      setTsSolutionFile((s) => s + 1);
+      setTsSolutionFile((s: number) => s + 1);
       executeSolution(s);
     });
     return () => {
@@ -103,7 +107,7 @@ const App = ({ state }: Props) => {
     watcher.removeAllListeners('change');
     watcher.on('change', async () => {
       const s = { year: state.year, day: state.day, part, inputMode, language: state.language };
-      setTsInputFile((s) => s + 1);
+      setTsInputFile((s: number) => s + 1);
       executeSolution(s);
     });
     return () => {
@@ -111,7 +115,7 @@ const App = ({ state }: Props) => {
     };
   }, [inputFileName]);
 
-  useInput(async (input, key) => {
+  useInput(async (input: string, key: Key) => {
     switch (input.toLowerCase()) {
       case 'q': {
         terminate();
