@@ -161,7 +161,8 @@ npm run build
 ### Available Scripts
 
 - `npm run build` - Build the project
-- `npm run dev` - Run in development mode
+- `npm run start` - Build and run the project
+- `npm run start:dev` - Run in development mode
 - `npm run test` - Run tests
 - `npm run lint` - Run ESLint
 - `npm run lint:fix` - Fix ESLint issues

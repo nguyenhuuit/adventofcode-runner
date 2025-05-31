@@ -1,7 +1,6 @@
 import * as esbuild from 'esbuild';
 import { execSync } from 'child_process';
 import fs from 'fs';
-import path from 'path';
 
 // Clean dist directory
 execSync('rm -rf dist');
