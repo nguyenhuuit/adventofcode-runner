@@ -1,5 +1,3 @@
-import { beforeEach, describe, expect, it, jest } from '@jest/globals';
-
 import { validate } from '../prompter';
 import { MockPrompt } from './types';
 

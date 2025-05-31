@@ -1,12 +1,11 @@
 import { ChildProcess, execSync, spawn } from 'child_process';
-import { dirname, join, resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
 import { getInputFile, getSolutionFile } from '@utils/misc';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const dir = resolve(join(__dirname, '..'));
+const dir = dirname(__filename);
 
 let childProcess: ChildProcess;
 
