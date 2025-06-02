@@ -18,18 +18,6 @@ A CLI tool to help you run and test your Advent of Code solutions across differe
 
 ## Installation
 
-This project uses pnpm for package management. If you haven't installed pnpm yet, you can do so globally with:
-
-```bash
-npm install -g pnpm
-```
-
-Then, install the project dependencies:
-
-```bash
-pnpm install
-```
-
 You can use the tool in two ways:
 
 ### Option 1: Using npx (Recommended)
@@ -121,7 +109,7 @@ current/
 - `--year`: The year of the challenge (e.g., 2023)
 - `--day`: The day of the challenge (1-25)
 - `--part`: The part of the challenge (1 or 2)
-- `--language`: Programming language (python, javascript, java, cpp)
+- `--language`: Programming language (python, javascript, java, cpp, ruby)
 - `--help`: Show help information
 
 ### Hotkeys
@@ -154,9 +142,21 @@ current/
 ### Prerequisites
 
 - Node.js >= 20
-- npm >= 10
+- pnpm >= 10
 
 ### Setup
+
+This project uses pnpm for package management. If you haven't installed pnpm yet, you can do so globally with:
+
+```bash
+npm install -g pnpm
+```
+
+Then, install the project dependencies:
+
+```bash
+pnpm install
+```
 
 ```bash
 # Clone the repository
@@ -164,10 +164,10 @@ git clone https://github.com/nguyenhuuit/adventofcode-runner.git
 cd adventofcode-runner
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build the project
-npm run build
+pnpm run build
 ```
 
 ### Available Scripts
