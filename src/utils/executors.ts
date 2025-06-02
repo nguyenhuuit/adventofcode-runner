@@ -92,7 +92,6 @@ const executeRuby = (state: ExecutionInput): ChildProcess => {
     'ruby',
     [state.baseDir + '/drivers/ruby/ruby.rb', state.year, state.day, state.part, state.inputMode],
     {
-      cwd: state.baseDir,
       stdio: ['pipe', 'pipe', 'pipe', 'ipc'],
     }
   );

@@ -10,10 +10,10 @@ day = ARGV[1]
 part = ARGV[2]
 inp = ARGV[3]
 
-folder = "#{year}/day#{day}"
-input_file = "../#{folder}/#{inp}.txt"
+input_file = "#{Dir.pwd}/#{year}/day#{day}/#{inp}.txt"
+solution_file = "#{Dir.pwd}/#{year}/day#{day}/part#{part}.rb"
 
-require_relative "../../../#{folder}/part#{part}.rb"
+require_relative "#{solution_file}"
 
 input_text = File.read(File.expand_path(input_file)).strip
 
