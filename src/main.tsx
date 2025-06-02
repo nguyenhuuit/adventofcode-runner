@@ -30,7 +30,7 @@ validate(program.opts())
     const { year, day, part, language } = result;
     const initialState: AppState = {
       inputMode: 'sample',
-      answer: '123',
+      answer: '',
       output: '',
       year,
       day,

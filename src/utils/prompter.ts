@@ -16,6 +16,7 @@ export const LANGUAGE_MAP: { [key: string]: string } = {
   javascript: 'javascript',
   Java: 'java',
   java: 'java',
+  Golang: 'go',
   go: 'go',
   golang: 'go',
   'C++': 'cpp',
@@ -37,9 +38,12 @@ export const validate = async (opts: PromtOptions) => {
         { name: 'Java' },
         { name: 'C++' },
         { name: 'Ruby' },
+        { name: 'Golang' },
       ],
     });
     language = LANGUAGE_MAP[selectedLanguage.language] || DEFAULT_LANGUAGE;
+  } else {
+    language = LANGUAGE_MAP[language] || DEFAULT_LANGUAGE;
   }
   if (!year) {
     const rs: Pick<PromtOptions, 'year'> = await inquirer.prompt({

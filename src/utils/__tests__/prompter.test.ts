@@ -53,6 +53,7 @@ describe('prompter', () => {
           { name: 'Java' },
           { name: 'C++' },
           { name: 'Ruby' },
+          { name: 'Golang' },
         ],
       });
     });
