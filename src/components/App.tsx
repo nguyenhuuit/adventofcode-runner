@@ -18,6 +18,7 @@ import { useYearInfo } from '@hooks/useYearInfo';
 
 import Spinner from '@components/Spinner';
 import { HELP_MESSAGE } from '@components/constants';
+import { useVsCode } from '@hooks/useVsCode';
 
 const watcher = chokidar.watch([]) as FSWatcher & EventEmitter;
 
@@ -28,6 +29,7 @@ type Props = {
 const App = ({ state }: Props) => {
   const { baseDir } = state;
   const { exit } = useApp();
+  const { openFile } = useVsCode();
 
   const [tsUserName, setTsUserName] = useState<number>(0);
   const { userName, star } = useYearInfo(state.year, tsUserName);
@@ -97,6 +99,7 @@ const App = ({ state }: Props) => {
       setTsSolutionFile((s: number) => s + 1);
       executeSolution(s);
     });
+    openFile(solutionFileName);
     return () => {
       watcher.unwatch(solutionFileName);
     };

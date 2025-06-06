@@ -1,6 +1,6 @@
 {
   "name": "@nguyenhuu/adventofcode",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Advent of Code Runner",
   "main": "dist/main.js",
   "type": "module",
@@ -51,6 +51,7 @@
     "@sindresorhus/tsconfig": "7.0.0",
     "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "@types/jest": "29.5.14",
+    "@types/react": "19.1.6",
     "@typescript-eslint/eslint-plugin": "8.32.1",
     "@typescript-eslint/parser": "8.32.1",
     "esbuild": "0.25.5",
