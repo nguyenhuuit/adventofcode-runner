@@ -8,7 +8,7 @@ import { Box, Text, useApp, useInput } from 'ink';
 
 import type { Key } from 'ink';
 
-import { terminate } from '@utils/executors';
+import { terminate } from '@utils/execute';
 
 import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
 import { useInputFile } from '@hooks/useInputFile';

@@ -1,4 +1,4 @@
-import { executeAsStream } from '@utils/executors';
+import { executeAsStream } from '@utils/execute';
 
 interface ExecuteHookInput {
   onOutput: Function;
