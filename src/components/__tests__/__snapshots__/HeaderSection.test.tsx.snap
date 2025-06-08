@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderSection renders correctly with all props 1`] = `
+<div>
+  <div
+    data-testid="box"
+  >
+    <span
+      data-testid="text"
+    >
+      📆 Year:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      2023
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      Day:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      1
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      Part:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      1
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      | 📘 Language:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      typescript
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      | 👤 Username:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      test-user
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      1
+      ⭐️
+       
+    </span>
+  </div>
+</div>
+`;
+
+exports[`HeaderSection renders correctly without optional props 1`] = `
+<div>
+  <div
+    data-testid="box"
+  >
+    <span
+      data-testid="text"
+    >
+      📆 Year:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      2023
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      Day:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      1
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      Part:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      1
+       
+    </span>
+    <span
+      data-testid="text"
+    >
+      | 📘 Language:
+    </span>
+    <span
+      data-testid="text"
+    >
+       
+      typescript
+       
+    </span>
+  </div>
+</div>
+`;

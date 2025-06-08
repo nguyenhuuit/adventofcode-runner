@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FileSection renders correctly with empty file sizes 1`] = `
+<div>
+  <div
+    data-testid="box"
+    width="100"
+  >
+    <div
+      data-testid="box"
+      flexdirection="column"
+      width="70"
+    >
+      <span
+        data-testid="text"
+      >
+        Solution file: solution.ts 0 bytes
+      </span>
+      <span
+        data-testid="text"
+      >
+           Input file: input.txt 0 bytes
+      </span>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FileSection renders correctly with file info 1`] = `
+<div>
+  <div
+    data-testid="box"
+    width="100"
+  >
+    <div
+      data-testid="box"
+      flexdirection="column"
+      width="70"
+    >
+      <span
+        data-testid="text"
+      >
+        Solution file: solution.ts 123 bytes
+      </span>
+      <span
+        data-testid="text"
+      >
+           Input file: input.txt 456 bytes
+      </span>
+    </div>
+  </div>
+</div>
+`;

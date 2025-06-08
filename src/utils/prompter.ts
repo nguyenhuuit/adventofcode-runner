@@ -1,12 +1,5 @@
 import inquirer from 'enquirer';
 
-interface PromtOptions {
-  year?: string;
-  day?: string;
-  part?: string;
-  language?: string;
-}
-
 export const DEFAULT_LANGUAGE = 'python';
 
 export const LANGUAGE_MAP: { [key: string]: string } = {

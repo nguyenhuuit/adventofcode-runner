@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResultSection renders correctly in loading state 1`] = `
+<div>
+  <div
+    data-testid="box"
+  >
+    <span
+      data-testid="text"
+    >
+      <div
+        data-testid="spinner"
+      >
+        Loading...
+      </div>
+    </span>
+    <span
+      data-testid="text"
+    >
+      Result: 
+    </span>
+    <span
+      data-testid="text"
+    >
+      <div
+        data-testid="spinner"
+      >
+        Loading...
+      </div>
+    </span>
+  </div>
+</div>
+`;
+
+exports[`ResultSection renders correctly with output 1`] = `
+<div>
+  <div
+    data-testid="box"
+  >
+    <span
+      data-testid="text"
+    />
+    <span
+      data-testid="text"
+    >
+      Result: 
+    </span>
+    <span
+      data-testid="text"
+    >
+      42
+    </span>
+    <span
+      data-testid="text"
+    >
+         ⏱ 0.5s
+    </span>
+  </div>
+  <div
+    data-testid="box"
+    height="1"
+  />
+  <div
+    data-testid="box"
+    flexdirection="column"
+  >
+    <span
+      data-testid="text"
+    >
+      Test output
+    </span>
+  </div>
+</div>
+`;
+
+exports[`ResultSection renders correctly with result 1`] = `
+<div>
+  <div
+    data-testid="box"
+  >
+    <span
+      data-testid="text"
+    />
+    <span
+      data-testid="text"
+    >
+      Result: 
+    </span>
+    <span
+      data-testid="text"
+    >
+      42
+    </span>
+    <span
+      data-testid="text"
+    >
+         ⏱ 0.5s
+    </span>
+  </div>
+</div>
+`;

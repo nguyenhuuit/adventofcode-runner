@@ -1,12 +1,17 @@
+import { useStore } from 'zustand';
+
 import { useEffect, useState } from 'react';
 
 import axios from '@utils/axios';
 import { VALID_YEARS } from '@utils/constants';
 
+import { ExecutionStoreInstance } from './useExecutionStore';
+
 const REGEX_USERNAME = /class="user">(.+?) ?</;
 const REGEX_STAR = /class="star-count">(.+?)\*</;
 
-export const useYearInfo = (year: string, ts: number): AppProfile => {
+export const useYearInfo = (executionStore: ExecutionStoreInstance): AppProfile => {
+  const year = useStore(executionStore, (state) => state.year);
   const [userName, setUserName] = useState<string | undefined>('');
   const [star, setStar] = useState<string | undefined>('');
   useEffect(() => {
@@ -27,6 +32,6 @@ export const useYearInfo = (year: string, ts: number): AppProfile => {
         }
       }
     });
-  }, [year, ts]);
+  }, [year]);
   return { userName, star };
 };

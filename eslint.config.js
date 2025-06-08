@@ -7,7 +7,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['src/drivers/**/*']
+    ignores: ['src/drivers/**/*', 'src/@types/index.d.ts']
   },
   eslint.configs.recommended,
   {
@@ -33,6 +33,7 @@ export default [
       'react-hooks': reactHooksPlugin
     },
     rules: {
+      'no-unused-vars': ['warn', { 'argsIgnorePattern': '^_' }],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',

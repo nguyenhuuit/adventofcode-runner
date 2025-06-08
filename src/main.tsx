@@ -8,7 +8,7 @@ import { render } from 'ink';
 
 import { validate } from '@utils/prompter';
 
-import App from '@components/App';
+import App from './App';
 
 const __filename = fileURLToPath(import.meta.url);
 const baseDir = dirname(__filename);
@@ -26,19 +26,8 @@ program
 program.parse();
 
 validate(program.opts())
-  .then((result) => {
-    const { year, day, part, language } = result;
-    const initialState: AppState = {
-      inputMode: 'sample',
-      answer: '',
-      output: '',
-      year,
-      day,
-      part,
-      language,
-      baseDir,
-    };
-    render(<App state={initialState} />);
+  .then((promptInput) => {
+    render(<App promptInput={{ ...promptInput, baseDir }} />);
   })
   .catch(() => {
     process.exit(1);

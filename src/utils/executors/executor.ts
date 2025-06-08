@@ -1,30 +1,29 @@
 import { ChildProcess, SpawnOptions, spawn } from 'child_process';
-import { getInputFile, getSolutionFile } from '@utils/misc';
 
 export abstract class Executor {
   public static currentProcess: ChildProcess | null = null;
   protected static readonly DEFAULT_STDIO: SpawnOptions['stdio'] = ['pipe', 'pipe', 'pipe', 'ipc'];
 
-  constructor(protected state: ExecutionInput) {
-    this.state = state;
+  constructor(protected options: ExecuteOptions) {
+    this.options = options;
   }
 
   abstract execute(): ChildProcess;
-
-  protected getSolutionFile(): string {
-    return getSolutionFile(this.state);
-  }
-
-  protected getInputFile(): string {
-    return getInputFile(this.state);
-  }
 
   protected setCurrentProcess(process: ChildProcess): void {
     Executor.currentProcess = process;
   }
 
-  protected getDriverPath(language: string): string {
-    return `${this.state.baseDir}/drivers/${language}`;
+  protected getSolutionFilePath(): string {
+    return this.options.solutionFile;
+  }
+
+  protected getInputFilePath(): string {
+    return this.options.inputFile;
+  }
+
+  protected getDriverPath(): string {
+    return `${this.options.baseDir}/drivers/${this.options.language}`;
   }
 
   public static terminate(): void {
@@ -33,7 +32,11 @@ export abstract class Executor {
     }
   }
 
-  protected spawnProcess(command: string, args: string[], options: SpawnOptions = {}): ChildProcess {
+  protected spawnProcess(
+    command: string,
+    args: string[],
+    options: SpawnOptions = {}
+  ): ChildProcess {
     const process = spawn(command, args, {
       ...options,
       stdio: options.stdio || Executor.DEFAULT_STDIO,
@@ -41,4 +44,4 @@ export abstract class Executor {
     this.setCurrentProcess(process);
     return process;
   }
-} 
+}

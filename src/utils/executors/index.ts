@@ -4,4 +4,4 @@ export * from './javaExecutor';
 export * from './pythonExecutor';
 export * from './rubyExecutor';
 export * from './javascriptExecutor';
-export * from './golangExecutor'; 
+export * from './golangExecutor';

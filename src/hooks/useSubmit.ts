@@ -1,55 +1,65 @@
+import chalk from 'chalk';
+import { useStore } from 'zustand';
+
 import { useCallback } from 'react';
 
 import axios from '@utils/axios';
 
-interface SubmitResponse {
-  correct: boolean;
-  waitingTime?: string;
-}
+import { ExecutionStoreInstance } from './useExecutionStore';
 
-export const useSubmit = (
-  year: string,
-  day: string,
-  part: string,
-  answer: string
-): (() => Promise<SubmitResponse>) => {
-  const submit = useCallback<() => Promise<SubmitResponse>>(() => {
-    const url = `/${year}/day/${day}/answer`;
-    const data = `level=${part}&answer=${answer}`;
-    return new Promise((resolve, reject) => {
+export const useSubmit = (executionStore: ExecutionStoreInstance): (() => Promise<void>) => {
+  const { year, day, part, answer, setLoading, setOutput } = useStore(executionStore);
+
+  const submit = useCallback<() => Promise<void>>(async () => {
+    setLoading(true);
+    try {
+      const url = `/${year}/day/${day}/answer`;
+      const data = `level=${part}&answer=${answer}`;
+
       if (!axios) {
-        return reject('Invalid SESSION');
+        throw new Error('Invalid SESSION');
       }
-      axios
-        .post(url, data, {
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-          },
-        })
-        .then((resp) => {
-          let matches = resp.data.match(/(That's (not )?the right answer)/);
-          if (matches) {
-            if (matches[1] === "That's the right answer") {
-              return resolve({ correct: true });
-            } else {
-              const waitingTime = resp.data.match(/please wait (.*) before/);
-              if (waitingTime) {
-                return resolve({ correct: false, waitingTime: waitingTime[1] });
-              } else {
-                return resolve({ correct: false });
-              }
-            }
+
+      const resp = await axios.post(url, data, {
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      let matches = resp.data.match(/(That's (not )?the right answer)/);
+      if (matches) {
+        if (matches[1] === "That's the right answer") {
+          setOutput(chalk.bold(chalk.greenBright('Right answer! 🤩')));
+        } else {
+          const waitingTime = resp.data.match(/please wait (.*) before/);
+          if (waitingTime) {
+            setOutput(
+              chalk.bold(chalk.red('Wrong answer! 🥹')) +
+                chalk.bold(chalk.redBright(` Waiting ${waitingTime[1]} ⏳`))
+            );
+          } else {
+            setOutput(chalk.bold(chalk.red('Wrong answer! 🥹')));
           }
-          matches = resp.data.match(/You have (.*) left to wait/);
-          if (matches) {
-            return resolve({ correct: false, waitingTime: matches[1] });
-          }
-          return reject('Unknown response');
-        })
-        .catch((err) => {
-          return reject(err);
-        });
-    });
-  }, [year, day, part, answer]);
+        }
+        return;
+      }
+
+      matches = resp.data.match(/You have (.*) left to wait/);
+      if (matches) {
+        setOutput(
+          chalk.bold(chalk.red('Wrong answer! 🥹')) +
+            chalk.bold(chalk.redBright(` Waiting ${matches[1]} ⏳`))
+        );
+        return;
+      }
+
+      throw new Error('Unknown response');
+    } catch (err: unknown) {
+      setOutput(chalk.bold(chalk.red(`Cannot submit answer: ${err}`)));
+    } finally {
+      setLoading(false);
+    }
+  }, [year, day, part, answer, setLoading, setOutput]);
+
   return submit;
 };

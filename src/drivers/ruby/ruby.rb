@@ -5,15 +5,12 @@ require 'benchmark'
 
 $stdout.sync = true
 
-year = ARGV[0]
-day = ARGV[1]
-part = ARGV[2]
-inp = ARGV[3]
+solution_file = ARGV[0]
+input_file = ARGV[1]
 
-input_file = "#{Dir.pwd}/#{year}/day#{day}/#{inp}.txt"
-solution_file = "#{Dir.pwd}/#{year}/day#{day}/part#{part}.rb"
+relative_solution_file = "#{Dir.pwd}#{solution_file[1..]}"
 
-require_relative "#{solution_file}"
+require_relative "#{relative_solution_file}"
 
 input_text = File.read(File.expand_path(input_file)).strip
 

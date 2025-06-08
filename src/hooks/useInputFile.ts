@@ -1,9 +1,14 @@
 import fs from 'fs';
+import { useStore } from 'zustand';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import axios from '@utils/axios';
 import { VALID_YEARS } from '@utils/constants';
+
+import { useExecuteAsStream } from './useExecuteAsStream';
+import { ExecutionStoreInstance } from './useExecutionStore';
+import { useWatcher } from './useWatcher';
 
 const decode = (str: string) => {
   return str
@@ -25,49 +30,60 @@ const findLongest = (str: string[]) => {
   return longest;
 };
 
-export const useInputFile = (year: string, day: string, inp: string, ts: number): AppFile => {
+export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile => {
   const [name, setName] = useState<string>('');
   const [size, setSize] = useState<number>(0);
+  const { year, day, inputMode, getRelativeDir, getInputFile } = useStore(executionStore);
+  const relativeDir = getRelativeDir();
+  const inputFileName = getInputFile();
+
+  const executeSolution = useExecuteAsStream(executionStore);
+
+  const handleFileChange = useCallback(() => {
+    executeSolution();
+  }, [executionStore]);
+
+  useWatcher({ filePath: name, onChange: handleFileChange });
+
   useEffect(() => {
-    const dir = `./${year}/day${day}/`;
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
+    if (!fs.existsSync(relativeDir)) {
+      fs.mkdirSync(relativeDir, { recursive: true });
     }
-    const file = `./${year}/day${day}/${inp}.txt`;
-    if (!fs.existsSync(file)) {
+    if (!fs.existsSync(inputFileName)) {
       let data = '';
-      fs.writeFileSync(file, data, { flag: 'as+' });
+      fs.writeFileSync(inputFileName, data, { flag: 'as+' });
     }
-    const stats = fs.statSync(file);
-    setName(file);
+    const stats = fs.statSync(inputFileName);
+    setName(inputFileName);
     setSize(stats.size);
     if (!VALID_YEARS.includes(year)) {
       return;
     }
-    if (stats.size === 0 && inp === 'input' && axios) {
+    if (stats.size === 0 && inputMode === 'input' && axios) {
       const url = `/${year}/day/${day}/input`;
       axios.get(url).then((res) => {
         if (res.data) {
-          fs.writeFileSync(file, res.data);
-          const stats = fs.statSync(file);
+          fs.writeFileSync(inputFileName, res.data);
+          const stats = fs.statSync(inputFileName);
           setSize(stats.size);
         }
       });
     }
-    if (stats.size === 0 && inp === 'sample' && axios) {
+    if (stats.size === 0 && inputMode === 'sample' && axios) {
       const url = `/${year}/day/${day}`;
       axios.get(url).then((res) => {
         if (res.data) {
           const SAMPLE_REGEX = /<code>(<em>)?([\s\S]+?)(<\/em>)?<\/code>/g;
           const matches = res.data.match(SAMPLE_REGEX);
           if (matches) {
-            fs.writeFileSync(file, decode(findLongest(matches)).trim());
-            const stats = fs.statSync(file);
+            fs.writeFileSync(inputFileName, decode(findLongest(matches)).trim());
+            const stats = fs.statSync(inputFileName);
             setSize(stats.size);
           }
         }
       });
     }
-  }, [year, day, inp, ts]);
+  }, [relativeDir, inputFileName]);
+
   return { name, size };
 };

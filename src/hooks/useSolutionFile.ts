@@ -1,37 +1,50 @@
 import fs from 'fs';
+import { useStore } from 'zustand';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { EXTENSIONS, TEMPLATES } from '@utils/languages';
+import { TEMPLATES } from '@utils/languages';
 
-export const useSolutionFile = (
-  year: string,
-  day: string,
-  part: string,
-  language: string,
-  ts: number
-): AppFile => {
+import { useExecuteAsStream } from './useExecuteAsStream';
+import { ExecutionStoreInstance } from './useExecutionStore';
+import { useVsCode } from './useVsCode';
+import { useWatcher } from './useWatcher';
+
+export const useSolutionFile = (executionStore: ExecutionStoreInstance): AppFile => {
+  const { year, day, part, language, getRelativeDir, getSolutionFile } = useStore(executionStore);
   const [name, setName] = useState<string>('');
   const [size, setSize] = useState<number>(0);
+  const { openFile } = useVsCode();
+  const relativeDir = getRelativeDir();
+  const solutionFileName = getSolutionFile();
+
+  const executeSolution = useExecuteAsStream(executionStore);
+
+  const handleFileChange = useCallback(() => {
+    executeSolution();
+  }, [executeSolution]);
+
+  useWatcher({ filePath: name, onChange: handleFileChange });
+
   useEffect(() => {
-    const dir = `./${year}/day${day}/`;
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
+    if (!fs.existsSync(relativeDir)) {
+      fs.mkdirSync(relativeDir, { recursive: true });
     }
-    const file = `./${year}/day${day}/part${part}.${EXTENSIONS[language]}`;
-    if (!fs.existsSync(file)) {
+    if (!fs.existsSync(solutionFileName)) {
       const template = TEMPLATES[language];
       if (template) {
         if (typeof template === 'function') {
-          fs.writeFileSync(file, template({ year, day, part }), { flag: 'as+' });
+          fs.writeFileSync(solutionFileName, template({ year, day, part }), { flag: 'as+' });
         } else {
-          fs.writeFileSync(file, template, { flag: 'as+' });
+          fs.writeFileSync(solutionFileName, template, { flag: 'as+' });
         }
       }
     }
-    const stats = fs.statSync(file);
-    setName(file);
+    const stats = fs.statSync(solutionFileName);
+    setName(solutionFileName);
     setSize(stats.size);
-  }, [year, day, part, language, ts]);
+    openFile(solutionFileName);
+  }, [relativeDir, solutionFileName, openFile]);
+
   return { name, size };
 };
