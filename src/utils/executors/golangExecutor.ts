@@ -1,24 +1,22 @@
 import { ChildProcess, execSync } from 'child_process';
+
 import { Executor } from './executor';
 
 export class GolangExecutor extends Executor {
+  override getDriverPath(): string {
+    return `${this.options.baseDir}/drivers/golang`;
+  }
   execute(): ChildProcess {
-    const solutionFile = this.getSolutionFile();
-    const inputFile = this.getInputFile();
-    execSync(
-      `go build -buildmode=plugin -o ${this.getDriverPath('golang')}/golang.so ${solutionFile}`
-    );
+    const solutionFile = this.getSolutionFilePath();
+    const inputFile = this.getInputFilePath();
+    const driverPath = this.getDriverPath();
+    execSync(`go build -buildmode=plugin -o ${driverPath}/golang.so ${solutionFile}`);
     return this.spawnProcess(
       'go',
-      [
-        'run',
-        this.getDriverPath('golang') + '/golang.go',
-        inputFile,
-        `${this.getDriverPath('golang')}/golang.so`,
-      ],
+      ['run', driverPath + '/golang.go', inputFile, `${driverPath}/golang.so`],
       {
         cwd: '.',
       }
     );
   }
-} 
+}

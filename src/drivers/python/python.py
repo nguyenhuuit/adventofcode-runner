@@ -3,18 +3,21 @@ import os
 import time
 import importlib
 import json
+from pathlib import Path
 
 args = sys.argv
-year = args[1]
-day = args[2]
-part = args[3]
-inp = args[4]
+solution_file = args[1]
+input_file = args[2]
 
-folder = year + "/day" + day
-input_file = folder + "/" + inp + ".txt"
+path = Path(solution_file)
+folder = path.parent
+file_full_name = path.name
+
+file_name = file_full_name.split('.')[0]
+
 sys.path.append(os.path.abspath(folder))
 
-mod = importlib.import_module('part' + part)
+mod = importlib.import_module(file_name)
 
 with open(os.path.abspath(input_file)) as inp:
   input_text = inp.read().strip()

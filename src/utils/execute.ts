@@ -1,4 +1,5 @@
 import { ChildProcess } from 'child_process';
+
 import {
   CppExecutor,
   Executor,
@@ -13,28 +14,28 @@ export const terminate = (): void => {
   Executor.terminate();
 };
 
-export const executeAsStream = (state: ExecutionInput): ChildProcess => {
+export const executeAsStream = (options: ExecuteOptions): ChildProcess => {
   terminate();
   let executor: Executor;
 
-  switch (state.language) {
+  switch (options.language) {
     case 'javascript':
-      executor = new JavascriptExecutor(state);
+      executor = new JavascriptExecutor(options);
       break;
     case 'python':
-      executor = new PythonExecutor(state);
+      executor = new PythonExecutor(options);
       break;
     case 'ruby':
-      executor = new RubyExecutor(state);
+      executor = new RubyExecutor(options);
       break;
     case 'go':
-      executor = new GolangExecutor(state);
+      executor = new GolangExecutor(options);
       break;
     case 'java':
-      executor = new JavaExecutor(state);
+      executor = new JavaExecutor(options);
       break;
     case 'cpp':
-      executor = new CppExecutor(state);
+      executor = new CppExecutor(options);
       break;
     default:
       throw Error('Unknown language');

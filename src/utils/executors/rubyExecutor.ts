@@ -1,17 +1,12 @@
 import { ChildProcess } from 'child_process';
+
 import { Executor } from './executor';
 
 export class RubyExecutor extends Executor {
   execute(): ChildProcess {
-    return this.spawnProcess(
-      'ruby',
-      [
-        this.getDriverPath('ruby') + '/ruby.rb',
-        this.state.year,
-        this.state.day,
-        this.state.part,
-        this.state.inputMode,
-      ]
-    );
+    const solutionFile = this.getSolutionFilePath();
+    const inputFile = this.getInputFilePath();
+    const driverPath = this.getDriverPath();
+    return this.spawnProcess('ruby', [driverPath + '/ruby.rb', solutionFile, inputFile]);
   }
-} 
+}
