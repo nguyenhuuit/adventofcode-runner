@@ -10,7 +10,14 @@ export class GolangExecutor extends Executor {
     const solutionFile = this.getSolutionFilePath();
     const inputFile = this.getInputFilePath();
     const driverPath = this.getDriverPath();
-    execSync(`go build -buildmode=plugin -o ${driverPath}/golang.so ${solutionFile}`);
+    try {
+      execSync(`go build -buildmode=plugin -o ${driverPath}/golang.so ${solutionFile}`, {
+        stdio: Executor.COMPILATION_STDIO,
+      });
+    } catch (error) {
+      return this.createErrorProcess(error);
+    }
+
     return this.spawnProcess(
       'go',
       ['run', driverPath + '/golang.go', inputFile, `${driverPath}/golang.so`],

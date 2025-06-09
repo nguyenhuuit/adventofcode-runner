@@ -33,8 +33,11 @@ const App = ({ promptInput }: Props) => {
   const executeSolution = useExecuteAsStream(executionStore);
 
   useEffect(() => {
+    if (!solutionFileName || !inputFileName) {
+      return;
+    }
     executeSolution();
-  }, []);
+  }, [solutionFileName, inputFileName]);
 
   useHandleInput(executionStore);
 
