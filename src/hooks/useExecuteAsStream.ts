@@ -1,6 +1,6 @@
 import { useStore } from 'zustand';
 
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { executeAsStream } from '@utils/execute';
 
@@ -16,7 +16,10 @@ export const useExecuteAsStream = (executionStore: ExecutionStoreInstance) => {
     useStore(executionStore);
   const solutionFile = executionStore.getState().getSolutionFile();
   const inputFile = executionStore.getState().getInputFile();
-  const execute = () => {
+  const execute = useCallback(() => {
+    if (!solutionFile || !inputFile) {
+      return;
+    }
     setLoading(true);
     clearOutput();
     const childProcess = executeAsStream({ solutionFile, inputFile, language, baseDir });
@@ -37,7 +40,12 @@ export const useExecuteAsStream = (executionStore: ExecutionStoreInstance) => {
     if (childProcess.stdout) {
       childProcess.stdout.setEncoding('utf8');
       childProcess.stdout.on('data', function (data) {
-        appendOutput(data.toString());
+        const dataStr = data.toString();
+        if (dataStr.startsWith('Command failed')) {
+          setAnswer('-');
+          setPerfLog('-');
+        }
+        appendOutput(dataStr);
       });
     }
     if (childProcess.stderr) {
@@ -46,9 +54,6 @@ export const useExecuteAsStream = (executionStore: ExecutionStoreInstance) => {
         appendOutput(data.toString());
       });
     }
-  };
-  useEffect(() => {
-    execute();
   }, [solutionFile, inputFile]);
   return execute;
 };

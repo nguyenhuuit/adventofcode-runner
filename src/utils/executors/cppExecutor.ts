@@ -8,7 +8,13 @@ export class CppExecutor extends Executor {
     const solutionFile = this.getSolutionFilePath();
     const inputFile = this.getInputFilePath();
     const driverPath = this.getDriverPath();
-    execSync(`g++ -o ${driverPath}/solution_cpp ${driverPath}/main.cpp ${solutionFile}`);
+    try {
+      execSync(`g++ -o ${driverPath}/solution_cpp ${driverPath}/main.cpp ${solutionFile}`, {
+        stdio: Executor.COMPILATION_STDIO,
+      });
+    } catch (error) {
+      return this.createErrorProcess(error);
+    }
     return this.spawnProcess(
       driverPath + '/solution_cpp',
       [inputFile.replace('./', resolve('./') + '/')],

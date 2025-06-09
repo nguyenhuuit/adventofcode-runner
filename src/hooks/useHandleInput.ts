@@ -6,7 +6,7 @@ import type { Key } from 'ink';
 import { useInput } from 'ink';
 
 import { HELP_MESSAGE } from '@utils/constants';
-import { terminate } from '@utils/execute';
+import { Executor } from '@utils/executors';
 
 import { useExecuteAsStream } from './useExecuteAsStream';
 import { ExecutionStoreInstance } from './useExecutionStore';
@@ -24,7 +24,7 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
     async (input: string, key: Key) => {
       switch (input.toLowerCase()) {
         case 'q': {
-          terminate();
+          Executor.terminate();
           process.exit();
           break; // Unreachable but satisfies eslint god
         }
@@ -54,7 +54,7 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
         }
         case 'x': {
           if (loading) {
-            terminate();
+            Executor.terminate();
             setTimeout(() => setOutput('Terminated!'), 100);
           }
           break;

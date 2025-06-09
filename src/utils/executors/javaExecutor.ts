@@ -8,7 +8,13 @@ export class JavaExecutor extends Executor {
     const solutionFile = this.getSolutionFilePath();
     const inputFile = this.getInputFilePath();
     const driverPath = this.getDriverPath();
-    execSync(`javac -d ${driverPath} ${solutionFile}`);
+
+    try {
+      execSync(`javac -d ${driverPath} ${solutionFile}`, { stdio: Executor.COMPILATION_STDIO });
+    } catch (error) {
+      return this.createErrorProcess(error);
+    }
+
     return this.spawnProcess(
       'java',
       ['-cp', 'gson-2.10.1.jar:.', 'JavaRunner', inputFile.replace('./', resolve('./') + '/')],
