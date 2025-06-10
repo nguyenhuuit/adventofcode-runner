@@ -19,7 +19,11 @@ const config = {
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  coverageDirectory: 'coverage',
+  collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx'],
+  coverageReporters: ['lcov', 'clover'],
+  coveragePathIgnorePatterns: ['/src/@types/'],
 };
 
 export default config;
