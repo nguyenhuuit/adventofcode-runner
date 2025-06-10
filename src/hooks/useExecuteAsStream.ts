@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import { executeAsStream } from '@utils/execute';
 
-import { ExecutionStoreInstance } from './useExecutionStore';
+import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
 
 interface ProcessMessage {
   result: string;

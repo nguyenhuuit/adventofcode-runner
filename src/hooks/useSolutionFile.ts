@@ -5,10 +5,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { TEMPLATES } from '@utils/languages';
 
-import { useExecuteAsStream } from './useExecuteAsStream';
-import { ExecutionStoreInstance } from './useExecutionStore';
-import { useVsCode } from './useVsCode';
-import { useWatcher } from './useWatcher';
+import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
+import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
+import { useVsCode } from '@hooks/useVsCode';
+import { useWatcher } from '@hooks/useWatcher';
 
 export const useSolutionFile = (executionStore: ExecutionStoreInstance): AppFile => {
   const { year, day, part, language, getRelativeDir, getSolutionFile } = useStore(executionStore);

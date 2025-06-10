@@ -8,7 +8,7 @@ import {
   JavascriptExecutor,
   PythonExecutor,
   RubyExecutor,
-} from './executors';
+} from '@utils/executors';
 
 interface IExecutorFactory {
   createExecutor(options: ExecuteOptions): Executor;

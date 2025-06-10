@@ -8,9 +8,9 @@ import { useInput } from 'ink';
 import { HELP_MESSAGE } from '@utils/constants';
 import { Executor } from '@utils/executors';
 
-import { useExecuteAsStream } from './useExecuteAsStream';
-import { ExecutionStoreInstance } from './useExecutionStore';
-import { useSubmit } from './useSubmit';
+import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
+import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
+import { useSubmit } from '@hooks/useSubmit';
 
 export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
   const { inputMode, part, loading, setInputMode, setPart, setOutput, appendOutput, clearOutput } =
@@ -18,7 +18,7 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
 
   const executeSolution = useExecuteAsStream(executionStore);
 
-  const submit = useSubmit(executionStore);
+  const { submit } = useSubmit(executionStore);
 
   const handleInput = useCallback(
     async (input: string, key: Key) => {

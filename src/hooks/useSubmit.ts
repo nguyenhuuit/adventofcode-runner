@@ -3,63 +3,38 @@ import { useStore } from 'zustand';
 
 import { useCallback } from 'react';
 
-import axios from '@utils/axios';
+import { aocClient } from '@utils/aocClient';
+import { logger } from '@utils/logger';
 
-import { ExecutionStoreInstance } from './useExecutionStore';
+import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
 
-export const useSubmit = (executionStore: ExecutionStoreInstance): (() => Promise<void>) => {
-  const { year, day, part, answer, setLoading, setOutput } = useStore(executionStore);
+export const useSubmit = (executionStore: ExecutionStoreInstance) => {
+  const { year, day, answer, setAnswer, setOutput, part } = useStore(executionStore);
 
-  const submit = useCallback<() => Promise<void>>(async () => {
-    setLoading(true);
+  const submit = useCallback(async () => {
+    if (!answer) return;
     try {
-      const url = `/${year}/day/${day}/answer`;
-      const data = `level=${part}&answer=${answer}`;
+      const result = await aocClient.submitAnswer(year, day, parseInt(part, 10), answer);
+      logger.debug(`Submit result: ${JSON.stringify(result)}`);
 
-      if (!axios) {
-        throw new Error('Invalid SESSION');
-      }
-
-      const resp = await axios.post(url, data, {
-        headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-        },
-      });
-
-      let matches = resp.data.match(/(That's (not )?the right answer)/);
-      if (matches) {
-        if (matches[1] === "That's the right answer") {
-          setOutput(chalk.bold(chalk.greenBright('Right answer! 🤩')));
-        } else {
-          const waitingTime = resp.data.match(/please wait (.*) before/);
-          if (waitingTime) {
-            setOutput(
-              chalk.bold(chalk.red('Wrong answer! 🥹')) +
-                chalk.bold(chalk.redBright(` Waiting ${waitingTime[1]} ⏳`))
-            );
-          } else {
-            setOutput(chalk.bold(chalk.red('Wrong answer! 🥹')));
-          }
+      if (result.correct) {
+        setOutput(chalk.bold(chalk.greenBright('Right answer! 🤩')));
+      } else {
+        let output = chalk.bold(chalk.red('Wrong answer! 🥹'));
+        if (result.waitingTime) {
+          output += chalk.bold(chalk.redBright(`  Waiting ${result.waitingTime} ⏳`));
         }
-        return;
+        setOutput(output);
       }
-
-      matches = resp.data.match(/You have (.*) left to wait/);
-      if (matches) {
-        setOutput(
-          chalk.bold(chalk.red('Wrong answer! 🥹')) +
-            chalk.bold(chalk.redBright(` Waiting ${matches[1]} ⏳`))
-        );
-        return;
-      }
-
-      throw new Error('Unknown response');
-    } catch (err: unknown) {
-      setOutput(chalk.bold(chalk.red(`Cannot submit answer: ${err}`)));
-    } finally {
-      setLoading(false);
+      setAnswer(result.message);
+      return result;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit answer';
+      setAnswer(errorMessage);
+      setOutput(chalk.bold(chalk.red(`Cannot submit answer: ${errorMessage}`)));
+      throw error;
     }
-  }, [year, day, part, answer, setLoading, setOutput]);
+  }, [year, day, part, answer]);
 
-  return submit;
+  return { submit };
 };

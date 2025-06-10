@@ -3,32 +3,13 @@ import { useStore } from 'zustand';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import axios from '@utils/axios';
+import { aocClient } from '@utils/aocClient';
 import { VALID_YEARS } from '@utils/constants';
+import { logger } from '@utils/logger';
 
-import { useExecuteAsStream } from './useExecuteAsStream';
-import { ExecutionStoreInstance } from './useExecutionStore';
-import { useWatcher } from './useWatcher';
-
-const decode = (str: string) => {
-  return str
-    .replaceAll('&gt;', '>')
-    .replaceAll('&lt;', '<')
-    .replaceAll('<code>', '')
-    .replaceAll('</code>', '')
-    .replaceAll('<em>', '')
-    .replaceAll('</em>', '');
-};
-
-const findLongest = (str: string[]) => {
-  let longest = '';
-  str.forEach((s: string) => {
-    if (s.length > longest.length) {
-      longest = s;
-    }
-  });
-  return longest;
-};
+import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
+import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
+import { useWatcher } from '@hooks/useWatcher';
 
 export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile => {
   const [name, setName] = useState<string>('');
@@ -59,31 +40,38 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
     if (!VALID_YEARS.includes(year)) {
       return;
     }
-    if (stats.size === 0 && inputMode === 'input' && axios) {
-      const url = `/${year}/day/${day}/input`;
-      axios.get(url).then((res) => {
-        if (res.data) {
-          fs.writeFileSync(inputFileName, res.data);
-          const stats = fs.statSync(inputFileName);
-          setSize(stats.size);
-        }
-      });
-    }
-    if (stats.size === 0 && inputMode === 'sample' && axios) {
-      const url = `/${year}/day/${day}`;
-      axios.get(url).then((res) => {
-        if (res.data) {
-          const SAMPLE_REGEX = /<code>(<em>)?([\s\S]+?)(<\/em>)?<\/code>/g;
-          const matches = res.data.match(SAMPLE_REGEX);
-          if (matches) {
-            fs.writeFileSync(inputFileName, decode(findLongest(matches)).trim());
+    if (stats.size === 0 && inputMode === 'input') {
+      aocClient
+        .fetchInput(year, day)
+        .then((data) => {
+          if (data) {
+            fs.writeFileSync(inputFileName, data);
             const stats = fs.statSync(inputFileName);
             setSize(stats.size);
           }
-        }
-      });
+        })
+        .catch((error) => {
+          logger.error(`Failed to fetch input: ${error}`);
+        });
     }
-  }, [relativeDir, inputFileName]);
+    if (stats.size === 0 && inputMode === 'sample') {
+      aocClient
+        .fetchProblem(year, day)
+        .then((html) => {
+          if (html) {
+            const sampleInput = aocClient.extractSampleInput(html);
+            if (sampleInput) {
+              fs.writeFileSync(inputFileName, sampleInput);
+              const stats = fs.statSync(inputFileName);
+              setSize(stats.size);
+            }
+          }
+        })
+        .catch((error) => {
+          logger.error(`Failed to fetch problem: ${error}`);
+        });
+    }
+  }, [relativeDir, inputFileName, year, day, inputMode]);
 
   return { name, size };
 };

@@ -1,6 +1,8 @@
 import * as esbuild from 'esbuild';
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 // Clean dist directory
 execSync('rm -rf dist');
@@ -10,6 +12,8 @@ fs.mkdirSync('dist', { recursive: true });
 
 // Copy drivers directory
 execSync('cp -r src/drivers dist');
+
+const pkg = JSON.parse(readFileSync(resolve(process.cwd(), 'package.json'), 'utf-8'));
 
 // Build configuration
 const buildOptions = {
@@ -36,13 +40,22 @@ const buildOptions = {
     'enquirer',
     'ink',
     'ink-spinner',
-    'react'
+    'pino',
+    'pino-abstract-transport',
+    'pino-pretty',
+    'pino-std-serializers',
+    'react',
+    'zustand'
   ],
   loader: {
     '.ts': 'ts',
     '.tsx': 'tsx'
   },
-  tsconfig: 'tsconfig.json'
+  tsconfig: 'tsconfig.json',
+  define: {
+    'PACKAGE_NAME': JSON.stringify(pkg.name),
+    'PACKAGE_VERSION': JSON.stringify(pkg.version),
+  },
 };
 
 // Build the project

@@ -1,6 +1,6 @@
 {
   "name": "@nguyenhuu/adventofcode",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Advent of Code Runner",
   "main": "dist/main.js",
   "type": "module",
@@ -45,12 +45,14 @@
     "enquirer": "2.4.1",
     "ink": "5.2.1",
     "ink-spinner": "5.0.0",
+    "pino": "9.7.0",
+    "pino-pretty": "10.3.1",
     "react": "18.3.1",
     "zustand": "5.0.5"
   },
   "devDependencies": {
     "@sindresorhus/tsconfig": "7.0.0",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "13.4.0",
     "@trivago/prettier-plugin-sort-imports": "5.2.2",
     "@types/jest": "29.5.14",
