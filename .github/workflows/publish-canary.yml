@@ -50,7 +50,12 @@ jobs:
         run: pnpm lint
 
       - name: Run Tests
-        run: pnpm test
+        run: pnpm test:coverage
+
+      - name: Upload to Coveralls
+        run: pnpm coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
       - name: Build
         run: pnpm build

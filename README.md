@@ -47,6 +47,11 @@ SESSION=f8fe3ed61...
 
 > The `session` cookie can be found in Developer Tools > Application tab > Cookies > `https://adventofcode.com` (requires login)
 
+> The CLI requires your Advent of Code session token to:
+> - Fetch puzzle inputs for your account
+> - Display your username and star count
+> - Submit your answers to the Advent of Code website
+
 ## Usage
 
 ### Basic Examples
@@ -82,19 +87,6 @@ adventofcode
   Part 2 
 ```
 
-### Using Sample Input
-
-1. Create a `sample.txt` file in your solution directory:
-```
-current/
-└── 2023/
-    └── day1/
-        ├── sample.txt    # Your test input
-        └── part1.py      # Your solution
-```
-
-2. Press `s` during runtime to use sample input
-
 ### Submitting Solutions
 
 1. Run your solution
@@ -106,10 +98,10 @@ current/
 
 ### Options
 
-- `--year`: The year of the challenge (e.g., 2023)
+- `--year`: The year of the challenge (e.g., 2024)
 - `--day`: The day of the challenge (1-25)
 - `--part`: The part of the challenge (1 or 2)
-- `--language`: Programming language (python, javascript, java, cpp, ruby)
+- `--language`: Programming language (python, javascript, java, cpp, golang, ruby)
 - `--help`: Show help information
 
 ### Hotkeys
@@ -117,7 +109,7 @@ current/
 - **s**: Use sample.txt as input
 - **i**: Use input.txt as input
 - **u**: Submit the most recent result
-- **0-9**: Select part
+- **1-9**: Select part
 - **c**: Clear terminal
 - **q**: Quit program
 - **x**: Terminate solution
@@ -201,7 +193,3 @@ src/
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Author
-
-Huu Nguyen <nguyenhuuit@yahoo.com>
