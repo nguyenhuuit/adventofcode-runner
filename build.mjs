@@ -3,6 +3,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import 'dotenv/config';
 
 // Clean dist directory
 execSync('rm -rf dist');
@@ -31,6 +32,7 @@ const buildOptions = {
   treeShaking: true,
   external: [
     // External dependencies that should not be bundled
+    '@amplitude/analytics-node',
     'axios',
     'chalk',
     'chokidar',
@@ -45,6 +47,7 @@ const buildOptions = {
     'pino-pretty',
     'pino-std-serializers',
     'react',
+    'uuid',
     'zustand'
   ],
   loader: {
@@ -55,6 +58,7 @@ const buildOptions = {
   define: {
     'PACKAGE_NAME': JSON.stringify(pkg.name),
     'PACKAGE_VERSION': JSON.stringify(pkg.version),
+    'AMPLITUDE_API_KEY': JSON.stringify(process.env.AMPLITUDE_API_KEY || ''),
   },
 };
 

@@ -13,7 +13,8 @@ A CLI tool to help you run and test your Advent of Code solutions across differe
 - 🚀 Run solutions in multiple languages (Python, JavaScript, Java, C++, Ruby)
 - 🔄 Watch mode for automatic re-runs
 - 🎨 Beautiful terminal UI with spinners and colors
-- 🧪 Test your solutions with sample inputs
+- 📡 Auto-fetch puzzle inputs
+- 🧪 Test your solutions with sample/real inputs
 - 📊 Track your progress and performance
 
 ## Installation
@@ -102,6 +103,7 @@ adventofcode
 - `--day`: The day of the challenge (1-25)
 - `--part`: The part of the challenge (1 or 2)
 - `--language`: Programming language (python, javascript, java, cpp, golang, ruby)
+- `--disable-telemetry`: Disable anonymous usage tracking
 - `--help`: Show help information
 
 ### Hotkeys
@@ -128,6 +130,27 @@ current/
 ```
 
 ![demo](https://cdn.huu.app/images/adventofcode-runner.png)
+
+## Telemetry
+
+This application collects anonymous usage data to help improve the user experience. The data collected includes:
+
+- Event types (execution, submission, input fetch, key press)
+- Basic context (year, day, part, language, input mode)
+- Application version and platform
+
+No personal information is collected. The data is used to:
+- Understand usage patterns
+- Identify common issues
+- Guide future improvements
+
+### Opting Out
+
+You can opt out of telemetry in two ways:
+
+1. Using the command line option: `--disable-telemetry`
+
+2. Using an environment variable: `DISABLE_TELEMETRY=true`
 
 ## Development
 

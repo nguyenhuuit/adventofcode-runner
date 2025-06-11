@@ -1,30 +1,54 @@
-import dotenv from 'dotenv';
+import os from 'os';
+import { v5 as uuidv5 } from 'uuid';
 
-// Load environment variables from .env file
-dotenv.config();
+import { AOC_NAMESPACE, APP_AMPLITUDE_API_KEY, APP_NAME, APP_VERSION } from '@utils/constants';
 
-type LogLevel = 'fatal' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
-
-interface Config {
-  sessionToken?: string;
-  logLevel?: LogLevel;
-  logDir?: string;
+export interface Config {
+  sessionToken: string;
+  logLevel: string;
+  logDir: string;
+  amplitudeApiKey: string;
+  userId: string;
+  deviceId: string;
+  telemetryEnabled: boolean;
+  appName: string;
+  appVersion: string;
 }
 
-function getConfig(): Config {
-  const sessionToken = process.env['SESSION'];
-  const logLevel = process.env['LOG_LEVEL'] as LogLevel | undefined;
-  const logDir = process.env['LOG_DIR'];
-
-  if (logLevel && !['fatal', 'error', 'warn', 'info', 'debug', 'trace'].includes(logLevel)) {
-    console.warn('Invalid logLevel, using default: info');
+const getMacAddress = (): string => {
+  const interfaces = os.networkInterfaces();
+  // Look for the first non-internal interface with a MAC address
+  for (const name of Object.keys(interfaces)) {
+    const networkInterface = interfaces[name];
+    if (networkInterface) {
+      for (const iface of networkInterface) {
+        if (!iface.internal && iface.mac && iface.mac !== '00:00:00:00:00:00') {
+          return iface.mac;
+        }
+      }
+    }
   }
+  return '';
+};
 
-  return {
-    sessionToken,
-    logLevel,
-    logDir,
-  };
-}
+const generateUserId = (sessionToken: string): string => {
+  const input = sessionToken || getMacAddress();
+  return uuidv5(input, AOC_NAMESPACE);
+};
 
-export const config = getConfig();
+const generateDeviceId = (): string => {
+  const macAddress = getMacAddress();
+  return uuidv5(macAddress, AOC_NAMESPACE);
+};
+
+export const config: Config = {
+  sessionToken: process.env['SESSION'] || '',
+  logLevel: process.env['LOG_LEVEL'] || 'info',
+  logDir: process.env['LOG_DIR'] || 'logs',
+  amplitudeApiKey: APP_AMPLITUDE_API_KEY,
+  userId: generateUserId(process.env['SESSION'] || ''),
+  deviceId: generateDeviceId(),
+  telemetryEnabled: !(process.env['DISABLE_TELEMETRY'] === 'true'),
+  appName: APP_NAME,
+  appVersion: APP_VERSION,
+};

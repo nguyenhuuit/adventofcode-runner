@@ -6,6 +6,7 @@ import React from 'react';
 
 import { render } from 'ink';
 
+import { config } from '@utils/config';
 import { validate } from '@utils/prompter';
 
 import App from './App';
@@ -21,9 +22,12 @@ program
   .addOption(new Option('-y, --year <year>'))
   .addOption(new Option('-l, --language <language>'))
   .addOption(new Option('-d, --day <day>'))
-  .addOption(new Option('-p, --part <part>'));
+  .addOption(new Option('-p, --part <part>'))
+  .addOption(new Option('--disable-telemetry', 'Disable telemetry'));
 
 program.parse();
+
+config.telemetryEnabled = !program.opts()['disableTelemetry'];
 
 validate(program.opts())
   .then((promptInput) => {

@@ -2,15 +2,16 @@ import { useStore } from 'zustand';
 
 import { useCallback } from 'react';
 
-import type { Key } from 'ink';
-import { useInput } from 'ink';
+import { type Key, useInput } from 'ink';
 
-import { HELP_MESSAGE } from '@utils/constants';
+import { TrackingEvent } from '@utils/analytics';
+import { HELP_MESSAGE, InputMode } from '@utils/constants';
 import { Executor } from '@utils/executors';
 
 import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
 import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
 import { useSubmit } from '@hooks/useSubmit';
+import { useTelemetry } from '@hooks/useTelemetry';
 
 export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
   const { inputMode, part, loading, setInputMode, setPart, setOutput, appendOutput, clearOutput } =
@@ -19,9 +20,25 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
   const executeSolution = useExecuteAsStream(executionStore);
 
   const { submit } = useSubmit(executionStore);
+  const { track } = useTelemetry(executionStore);
 
   const handleInput = useCallback(
     async (input: string, key: Key) => {
+      // Track the key press
+      let payload = {};
+      if (key.return) {
+        payload = { key: 'enter' };
+      } else if (key.upArrow) {
+        payload = { key: 'up' };
+      } else if (key.downArrow) {
+        payload = { key: 'down' };
+      } else if (input) {
+        payload = { key: input.toLowerCase() };
+      } else {
+        payload = { key: 'unknown' };
+      }
+      track(TrackingEvent.KEY_PRESS, payload);
+
       switch (input.toLowerCase()) {
         case 'q': {
           Executor.terminate();
@@ -29,11 +46,11 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
           break; // Unreachable but satisfies eslint god
         }
         case 'i': {
-          setInputMode('input');
+          setInputMode(InputMode.INPUT);
           break;
         }
         case 's': {
-          setInputMode('sample');
+          setInputMode(InputMode.SAMPLE);
           break;
         }
         case 'c':
@@ -67,15 +84,18 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
           submit();
           break;
         }
-      }
-      if (key.downArrow) {
-        setInputMode('input');
-      }
-      if (key.upArrow) {
-        setInputMode('sample');
-      }
-      if (key.return) {
-        executeSolution();
+        default: {
+          if (key.downArrow) {
+            setInputMode(InputMode.INPUT);
+          }
+          if (key.upArrow) {
+            setInputMode(InputMode.SAMPLE);
+          }
+          if (key.return) {
+            executeSolution();
+          }
+          break;
+        }
       }
     },
     [
@@ -89,6 +109,7 @@ export const useHandleInput = (executionStore: ExecutionStoreInstance) => {
       clearOutput,
       executeSolution,
       submit,
+      track,
     ]
   );
 

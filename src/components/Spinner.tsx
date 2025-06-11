@@ -1,5 +1,4 @@
-import spinners from 'cli-spinners';
-import type { SpinnerName } from 'cli-spinners';
+import spinners, { type SpinnerName } from 'cli-spinners';
 
 import React, { useEffect, useState } from 'react';
 
