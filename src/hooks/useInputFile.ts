@@ -3,12 +3,14 @@ import { useStore } from 'zustand';
 
 import { useCallback, useEffect, useState } from 'react';
 
+import { TrackingEvent } from '@utils/analytics';
 import { aocClient } from '@utils/aocClient';
-import { VALID_YEARS } from '@utils/constants';
+import { InputMode, VALID_YEARS } from '@utils/constants';
 import { logger } from '@utils/logger';
 
 import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
 import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
+import { useTelemetry } from '@hooks/useTelemetry';
 import { useWatcher } from '@hooks/useWatcher';
 
 export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile => {
@@ -17,12 +19,13 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
   const { year, day, inputMode, getRelativeDir, getInputFile } = useStore(executionStore);
   const relativeDir = getRelativeDir();
   const inputFileName = getInputFile();
+  const { track } = useTelemetry(executionStore);
 
   const executeSolution = useExecuteAsStream(executionStore);
 
   const handleFileChange = useCallback(() => {
     executeSolution();
-  }, [executionStore]);
+  }, [executeSolution]);
 
   useWatcher({ filePath: name, onChange: handleFileChange });
 
@@ -40,7 +43,7 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
     if (!VALID_YEARS.includes(year)) {
       return;
     }
-    if (stats.size === 0 && inputMode === 'input') {
+    if (stats.size === 0 && inputMode === InputMode.INPUT) {
       aocClient
         .fetchInput(year, day)
         .then((data) => {
@@ -48,13 +51,15 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
             fs.writeFileSync(inputFileName, data);
             const stats = fs.statSync(inputFileName);
             setSize(stats.size);
+            track(TrackingEvent.INPUT_FETCH, { success: true });
           }
         })
         .catch((error) => {
+          track(TrackingEvent.INPUT_FETCH, { success: false });
           logger.error(`Failed to fetch input: ${error}`);
         });
     }
-    if (stats.size === 0 && inputMode === 'sample') {
+    if (stats.size === 0 && inputMode === InputMode.SAMPLE) {
       aocClient
         .fetchProblem(year, day)
         .then((html) => {
@@ -64,14 +69,16 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
               fs.writeFileSync(inputFileName, sampleInput);
               const stats = fs.statSync(inputFileName);
               setSize(stats.size);
+              track(TrackingEvent.SAMPLE_FETCH, { success: true });
             }
           }
         })
         .catch((error) => {
+          track(TrackingEvent.SAMPLE_FETCH, { success: true });
           logger.error(`Failed to fetch problem: ${error}`);
         });
     }
-  }, [relativeDir, inputFileName, year, day, inputMode]);
+  }, [relativeDir, inputFileName, year, day, inputMode, track]);
 
   return { name, size };
 };

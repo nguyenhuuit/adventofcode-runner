@@ -1,4 +1,10 @@
 import chalk from 'chalk';
+import dotenv from 'dotenv';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import { v5 } from 'uuid';
+
+dotenv.config();
 
 export const VALID_YEARS = [
   '2015',
@@ -26,27 +32,36 @@ ${by('I')}  : Run solution with ${bg('input')}    ${by('Q')}    : Quit applicati
 
 export const NOOP = () => {};
 
-// These will be replaced by esbuild in production
+// These will be replaced by esbuild in build time
 declare const PACKAGE_NAME: string;
 declare const PACKAGE_VERSION: string;
+declare const AMPLITUDE_API_KEY: string;
 
 // For development environment, read from package.json
 let packageName: string;
 let packageVersion: string;
+let amplitudeApiKey: string;
 
 if (typeof PACKAGE_NAME === 'undefined' || typeof PACKAGE_VERSION === 'undefined') {
-  try {
-    const pkg = require('../../package.json');
-    packageName = pkg.name;
-    packageVersion = pkg.version;
-  } catch {
-    packageName = 'adventofcode-runner';
-    packageVersion = '0.0.0';
-  }
+  const pkg = JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8'));
+  packageName = pkg.name;
+  packageVersion = pkg.version;
+  amplitudeApiKey = process.env['AMPLITUDE_API_KEY'] || '';
 } else {
   packageName = PACKAGE_NAME;
   packageVersion = PACKAGE_VERSION;
+  amplitudeApiKey = AMPLITUDE_API_KEY;
 }
 
 export const APP_NAME = packageName;
 export const APP_VERSION = packageVersion;
+export const APP_AMPLITUDE_API_KEY = amplitudeApiKey;
+
+export const OID_NAMESPACE = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';
+
+export const AOC_NAMESPACE = v5(APP_AMPLITUDE_API_KEY, OID_NAMESPACE);
+
+export enum InputMode {
+  INPUT = 'input',
+  SAMPLE = 'sample',
+}

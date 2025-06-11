@@ -54,6 +54,8 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
 
       - name: Set version from tag
         id: set-version

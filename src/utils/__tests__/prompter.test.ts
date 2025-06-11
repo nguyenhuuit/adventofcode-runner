@@ -1,5 +1,12 @@
+import { InputMode } from '../constants';
 import { validate } from '../prompter';
 import { MockPrompt } from './types';
+
+jest.mock('chalk', () => ({
+  bold: (text: string) => text,
+  greenBright: (text: string) => text,
+  yellowBright: (text: string) => text,
+}));
 
 jest.mock('enquirer', () => ({
   prompt: jest.fn(),
@@ -75,7 +82,7 @@ describe('prompter', () => {
       });
       expect(mockPrompt).toHaveBeenCalledTimes(1);
       expect(mockPrompt).toHaveBeenCalledWith({
-        type: 'input',
+        type: InputMode.INPUT,
         name: 'year',
         message: 'Select year',
       });
@@ -98,7 +105,7 @@ describe('prompter', () => {
       });
       expect(mockPrompt).toHaveBeenCalledTimes(1);
       expect(mockPrompt).toHaveBeenCalledWith({
-        type: 'input',
+        type: InputMode.INPUT,
         name: 'day',
         message: 'Select day',
       });

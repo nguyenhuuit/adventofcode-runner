@@ -1,5 +1,6 @@
 import { StoreApi, UseBoundStore, create } from 'zustand';
 
+import { InputMode } from '@utils/constants';
 import { EXTENSIONS } from '@utils/languages';
 
 interface ExecutionState {
@@ -8,7 +9,7 @@ interface ExecutionState {
   part: string;
   language: string;
   baseDir: string;
-  inputMode: string;
+  inputMode: InputMode;
   output: string;
   answer: string;
   perfLog: string;
@@ -16,7 +17,7 @@ interface ExecutionState {
 }
 
 interface ExecutionActions {
-  setInputMode: StringFunction;
+  setInputMode: (inputMode: InputMode) => void;
   setPart: StringFunction;
   setOutput: StringFunction;
   clearOutput: Function;
@@ -35,7 +36,7 @@ export type ExecutionStoreInstance = UseBoundStore<StoreApi<ExecutionStore>>;
 
 export const createExecutionStore = (promptInput: Required<PromtOptions> & { baseDir: string }) =>
   create<ExecutionStore>((set, get) => ({
-    inputMode: 'sample',
+    inputMode: InputMode.SAMPLE,
     output: '',
     answer: '',
     perfLog: '',

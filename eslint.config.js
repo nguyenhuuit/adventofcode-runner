@@ -34,6 +34,7 @@ export default [
     },
     rules: {
       'no-unused-vars': 'off', // use the TypeScript rule instead
+      'no-duplicate-imports': 'error',
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
