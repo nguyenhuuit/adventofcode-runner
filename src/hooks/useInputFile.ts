@@ -7,6 +7,7 @@ import { TrackingEvent } from '@utils/analytics';
 import { aocClient } from '@utils/aocClient';
 import { InputMode, VALID_YEARS } from '@utils/constants';
 import { logger } from '@utils/logger';
+import { extractSampleInput } from '@utils/misc';
 
 import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
 import { ExecutionStoreInstance } from '@hooks/useExecutionStore';
@@ -64,7 +65,7 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
         .fetchProblem(year, day)
         .then((html) => {
           if (html) {
-            const sampleInput = aocClient.extractSampleInput(html);
+            const sampleInput = extractSampleInput(html);
             if (sampleInput) {
               fs.writeFileSync(inputFileName, sampleInput);
               const stats = fs.statSync(inputFileName);

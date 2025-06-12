@@ -23,7 +23,7 @@ export const decode = (str: string): string => {
       result = result.replaceAll(tag, '');
     }
 
-    return result.replace(/\s+/g, ' ').trim();
+    return result.trim();
   } catch (error) {
     logger.error(`Error in decode function ${error}`);
     return str;
@@ -39,4 +39,12 @@ export const findLongest = (strings: string[]): string => {
     (longest, current) => (current.length > longest.length ? current : longest),
     ''
   );
+};
+
+export const extractSampleInput = (html: string): string => {
+  const SAMPLE_REGEX = /<code>(<em>)?([\s\S]+?)(<\/em>)?<\/code>/g;
+  const matches = html.match(SAMPLE_REGEX);
+
+  if (!matches) return '';
+  return decode(findLongest(matches)).trim();
 };

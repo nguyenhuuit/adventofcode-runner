@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { config } from '@utils/config';
 import { APP_NAME, APP_VERSION } from '@utils/constants';
-import { decode, findLongest } from '@utils/misc';
 
 class AocClient {
   private client;
@@ -91,13 +90,6 @@ class AocClient {
     }
 
     return { correct: isCorrect, message, waitingTime };
-  }
-
-  extractSampleInput(html: string): string {
-    const SAMPLE_REGEX = /<code>(<em>)?([\s\S]+?)(<\/em>)?<\/code>/g;
-    const matches = html.match(SAMPLE_REGEX);
-    if (!matches) return '';
-    return decode(findLongest(matches)).trim();
   }
 }
 
