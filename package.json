@@ -18,8 +18,8 @@
     "prepare": "husky",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test": "jest --detectOpenHandles",
+    "test:coverage": "jest --coverage --detectOpenHandles"
   },
   "author": "Huu Nguyen <nguyenhuuit@yahoo.com>",
   "license": "MIT",

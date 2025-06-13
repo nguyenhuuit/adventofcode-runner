@@ -1,8 +1,8 @@
-import fs from 'fs';
 import path from 'path';
 import pino from 'pino';
 
 import { config } from '@utils/config';
+import { FileUtil } from '@utils/file';
 
 const DEFAULT_LOG_DIR = 'logs';
 
@@ -19,8 +19,8 @@ class Logger {
 
     try {
       const logDir = path.resolve(process.cwd(), config.logDir || DEFAULT_LOG_DIR);
-      if (!fs.existsSync(logDir)) {
-        fs.mkdirSync(logDir, { recursive: true });
+      if (!FileUtil.exists(logDir)) {
+        FileUtil.createDirectory(logDir);
       }
 
       const logFile = path.join(logDir, 'app.log');

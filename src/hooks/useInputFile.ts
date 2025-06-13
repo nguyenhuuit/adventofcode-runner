@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { useStore } from 'zustand';
 
 import { useCallback, useEffect, useState } from 'react';
@@ -6,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TrackingEvent } from '@utils/analytics';
 import { aocClient } from '@utils/aocClient';
 import { InputMode, VALID_YEARS } from '@utils/constants';
+import { FileUtil } from '@utils/file';
 import { logger } from '@utils/logger';
 import { extractSampleInput } from '@utils/misc';
 
@@ -31,14 +31,14 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
   useWatcher({ filePath: name, onChange: handleFileChange });
 
   useEffect(() => {
-    if (!fs.existsSync(relativeDir)) {
-      fs.mkdirSync(relativeDir, { recursive: true });
+    if (!FileUtil.exists(relativeDir)) {
+      FileUtil.createDirectory(relativeDir);
     }
-    if (!fs.existsSync(inputFileName)) {
+    if (!FileUtil.exists(inputFileName)) {
       let data = '';
-      fs.writeFileSync(inputFileName, data, { flag: 'as+' });
+      FileUtil.writeFile(inputFileName, data, { flag: 'as+' });
     }
-    const stats = fs.statSync(inputFileName);
+    const stats = FileUtil.getFileStats(inputFileName);
     setName(inputFileName);
     setSize(stats.size);
     if (!VALID_YEARS.includes(year)) {
@@ -49,8 +49,8 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
         .fetchInput(year, day)
         .then((data) => {
           if (data) {
-            fs.writeFileSync(inputFileName, data);
-            const stats = fs.statSync(inputFileName);
+            FileUtil.writeFile(inputFileName, data);
+            const stats = FileUtil.getFileStats(inputFileName);
             setSize(stats.size);
             track(TrackingEvent.INPUT_FETCH, { success: true });
           }
@@ -67,8 +67,8 @@ export const useInputFile = (executionStore: ExecutionStoreInstance): AppFile =>
           if (html) {
             const sampleInput = extractSampleInput(html);
             if (sampleInput) {
-              fs.writeFileSync(inputFileName, sampleInput);
-              const stats = fs.statSync(inputFileName);
+              FileUtil.writeFile(inputFileName, sampleInput);
+              const stats = FileUtil.getFileStats(inputFileName);
               setSize(stats.size);
               track(TrackingEvent.SAMPLE_FETCH, { success: true });
             }

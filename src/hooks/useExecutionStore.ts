@@ -34,9 +34,11 @@ export type ExecutionStore = ExecutionState & ExecutionActions;
 
 export type ExecutionStoreInstance = UseBoundStore<StoreApi<ExecutionStore>>;
 
-export const createExecutionStore = (promptInput: Required<PromtOptions> & { baseDir: string }) =>
+export const createExecutionStore = (
+  promptInput: Required<PromtOptions> & { baseDir: string; inputMode?: InputMode }
+) =>
   create<ExecutionStore>((set, get) => ({
-    inputMode: InputMode.SAMPLE,
+    inputMode: promptInput.inputMode ?? InputMode.SAMPLE,
     output: '',
     answer: '',
     perfLog: '',

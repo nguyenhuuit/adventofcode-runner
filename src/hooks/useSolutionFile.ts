@@ -1,8 +1,8 @@
-import fs from 'fs';
 import { useStore } from 'zustand';
 
 import { useCallback, useEffect, useState } from 'react';
 
+import { FileUtil } from '@utils/file';
 import { TEMPLATES } from '@utils/languages';
 
 import { useExecuteAsStream } from '@hooks/useExecuteAsStream';
@@ -27,20 +27,20 @@ export const useSolutionFile = (executionStore: ExecutionStoreInstance): AppFile
   useWatcher({ filePath: name, onChange: handleFileChange });
 
   useEffect(() => {
-    if (!fs.existsSync(relativeDir)) {
-      fs.mkdirSync(relativeDir, { recursive: true });
+    if (!FileUtil.exists(relativeDir)) {
+      FileUtil.createDirectory(relativeDir);
     }
-    if (!fs.existsSync(solutionFileName)) {
+    if (!FileUtil.exists(solutionFileName)) {
       const template = TEMPLATES[language];
       if (template) {
         if (typeof template === 'function') {
-          fs.writeFileSync(solutionFileName, template({ year, day, part }), { flag: 'as+' });
+          FileUtil.writeFile(solutionFileName, template({ year, day, part }), { flag: 'as+' });
         } else {
-          fs.writeFileSync(solutionFileName, template, { flag: 'as+' });
+          FileUtil.writeFile(solutionFileName, template, { flag: 'as+' });
         }
       }
     }
-    const stats = fs.statSync(solutionFileName);
+    const stats = FileUtil.getFileStats(solutionFileName);
     setName(solutionFileName);
     setSize(stats.size);
     openFile(solutionFileName);
