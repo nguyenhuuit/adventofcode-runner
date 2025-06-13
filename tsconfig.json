@@ -18,7 +18,7 @@
 		}
 	},
 	"include": ["src"],
-	"exclude": [ "**/*/__tests__/**/*"],
+	"exclude": [],
 	"ts-node": {
 		"transpileOnly": true,
 		"files": true,
