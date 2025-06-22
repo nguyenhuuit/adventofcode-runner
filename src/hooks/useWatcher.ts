@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 const watcher = chokidar.watch([]) as FSWatcher & EventEmitter;
 
 interface UseWatcherProps {
-  filePath: string;
+  filePath: string | null | undefined;
   onChange: () => void;
 }
 

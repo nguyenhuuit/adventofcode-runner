@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner should animate when loading is true 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should animate when loading is true 2`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠙
+  </span>
+</div>
+`;
+
+exports[`Spinner should animate when loading is true 3`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠹
+  </span>
+</div>
+`;
+
+exports[`Spinner should handle multiple timer advances 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠸
+  </span>
+</div>
+`;
+
+exports[`Spinner should handle rapid loading state changes 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠙
+  </span>
+</div>
+`;
+
+exports[`Spinner should handle rapid loading state changes 2`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠙
+  </span>
+</div>
+`;
+
+exports[`Spinner should loop back to first frame after last frame 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should render first frame when loading is undefined 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should render first frame when not loading 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should restart animation when loading becomes true again 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should restart animation when loading becomes true again 2`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠙
+  </span>
+</div>
+`;
+
+exports[`Spinner should stop animation when loading becomes false 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠙
+  </span>
+</div>
+`;
+
+exports[`Spinner should stop animation when loading becomes false 2`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should stop animation when loading becomes false 3`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should use default type when type is not specified 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    ⠋
+  </span>
+</div>
+`;
+
+exports[`Spinner should use different spinner type 1`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    -
+  </span>
+</div>
+`;
+
+exports[`Spinner should use different spinner type 2`] = `
+<div>
+  <span
+    data-testid="text"
+  >
+    \\
+  </span>
+</div>
+`;
