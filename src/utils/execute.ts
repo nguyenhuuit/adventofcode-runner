@@ -12,6 +12,7 @@ import {
 
 interface IExecutorFactory {
   createExecutor(options: ExecuteOptions): Executor;
+  registerExecutor(language: string, executor: new (options: ExecuteOptions) => Executor): void;
 }
 
 class ExecutorFactory implements IExecutorFactory {
@@ -57,7 +58,7 @@ const registerDefaultExecutors = (factory: ExecutorFactory): void => {
 const factoryInstance = ExecutorFactory.getInstance();
 registerDefaultExecutors(factoryInstance);
 
-export const executorFactory: IExecutorFactory = factoryInstance;
+export const executorFactory: ExecutorFactory = factoryInstance;
 
 export const executeAsStream = (options: ExecuteOptions): ChildProcess => {
   Executor.terminate();

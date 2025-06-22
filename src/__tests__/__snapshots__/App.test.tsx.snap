@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should render correctly with default props 1`] = `
+<div>
+  <div
+    data-testid="header-section"
+    day="1"
+    language="javascript"
+    part="1"
+    star="42"
+    username="TestUser"
+    year="2024"
+  />
+  <div
+    data-testid="box"
+    height="1"
+  />
+  <div
+    data-testid="file-section"
+    inputfilename="./input.txt"
+    inputfilesize="123"
+    solutionfilename="./solution.js"
+    solutionfilesize="456"
+  />
+  <div
+    data-testid="box"
+    height="1"
+  />
+  <div
+    answer=""
+    data-testid="result-section"
+    output=""
+    perflog=""
+  />
+</div>
+`;
+
+exports[`App should render correctly with different prompt input 1`] = `
+<div>
+  <div
+    data-testid="header-section"
+    day="25"
+    language="python"
+    part="2"
+    star="42"
+    username="TestUser"
+    year="2023"
+  />
+  <div
+    data-testid="box"
+    height="1"
+  />
+  <div
+    data-testid="file-section"
+    inputfilename="./input.txt"
+    inputfilesize="123"
+    solutionfilename="./solution.js"
+    solutionfilesize="456"
+  />
+  <div
+    data-testid="box"
+    height="1"
+  />
+  <div
+    answer=""
+    data-testid="result-section"
+    output=""
+    perflog=""
+  />
+</div>
+`;

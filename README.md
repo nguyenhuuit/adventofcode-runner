@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@nguyenhuu/adventofcode?color=lightgreen&label=npm&logo=npm&style=flat)](https://www.npmjs.com/package/@nguyenhuu/adventofcode)
 [![Node.js CI](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/publish-canary.yml/badge.svg)](https://github.com/nguyenhuuit/adventofcode-runner/actions/workflows/publish-canary.yml)
+[![Coverage Status](https://coveralls.io/repos/github/nguyenhuuit/adventofcode-runner/badge.svg?branch=main)](https://coveralls.io/github/nguyenhuuit/adventofcode-runner?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://github.com/nguyenhuuit/adventofcode-runner)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome!-6f42c1?style=flat&logo=github&logoColor=white)](https://github.com/nguyenhuuit/adventofcode-runner/pulls)
