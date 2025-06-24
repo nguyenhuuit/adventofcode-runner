@@ -20,7 +20,6 @@ export default [
         ecmaFeatures: {
           jsx: true
         },
-        project: './tsconfig-lint.json'
       },
       globals: {
         ...globals.node,
