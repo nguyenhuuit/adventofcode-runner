@@ -58,6 +58,7 @@ const buildOptions = {
   define: {
     'PACKAGE_NAME': JSON.stringify(pkg.name),
     'PACKAGE_VERSION': JSON.stringify(pkg.version),
+    'PACKAGE_DESCRIPTION': JSON.stringify(pkg.description),
     'AMPLITUDE_API_KEY': JSON.stringify(process.env.AMPLITUDE_API_KEY || ''),
   },
 };

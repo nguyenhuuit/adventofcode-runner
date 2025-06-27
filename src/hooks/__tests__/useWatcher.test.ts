@@ -3,14 +3,14 @@ import { renderHook } from '@testing-library/react';
 import { act } from 'react';
 
 const mockWatcher = {
-    add: jest.fn(),
-    removeAllListeners: jest.fn(),
-    on: jest.fn(),
-    unwatch: jest.fn(),
+  add: jest.fn(),
+  removeAllListeners: jest.fn(),
+  on: jest.fn(),
+  unwatch: jest.fn(),
 };
 
 jest.mock('chokidar', () => ({
-    watch: jest.fn(() => mockWatcher),
+  watch: jest.fn(() => mockWatcher),
 }));
 
 import { useWatcher } from '@hooks/useWatcher';

@@ -1,7 +1,13 @@
 import os from 'os';
 import { v5 as uuidv5 } from 'uuid';
 
-import { AOC_NAMESPACE, APP_AMPLITUDE_API_KEY, APP_NAME, APP_VERSION } from '@utils/constants';
+import {
+  AOC_NAMESPACE,
+  APP_AMPLITUDE_API_KEY,
+  APP_DESCRIPTION,
+  APP_NAME,
+  APP_VERSION,
+} from '@utils/constants';
 
 export interface Config {
   sessionToken: string;
@@ -13,6 +19,7 @@ export interface Config {
   telemetryEnabled: boolean;
   appName: string;
   appVersion: string;
+  appDescription: string;
 }
 
 const getMacAddress = (): string => {
@@ -51,4 +58,5 @@ export const config: Config = {
   telemetryEnabled: !(process.env['DISABLE_TELEMETRY'] === 'true'),
   appName: APP_NAME,
   appVersion: APP_VERSION,
+  appDescription: APP_DESCRIPTION,
 };

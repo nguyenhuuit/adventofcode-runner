@@ -11,7 +11,7 @@ A CLI tool to help you run and test your Advent of Code solutions across differe
 
 ## Features
 
-- 🚀 Run solutions in multiple languages (Python, JavaScript, Java, C++, Ruby)
+- 🚀 Run solutions in multiple languages (Python, JavaScript, Java, C++, Golang, Ruby)
 - 🔄 Watch mode for automatic re-runs
 - 🎨 Beautiful terminal UI with spinners and colors
 - 📡 Auto-fetch puzzle inputs
@@ -82,6 +82,7 @@ adventofcode
   Java 
   C++ 
   Ruby
+  Golang
 ? Select year: 2024
 ? Select day: 1
 ? Select part: (Use arrow keys)
@@ -100,12 +101,13 @@ adventofcode
 
 ### Options
 
-- `--year`: The year of the challenge (e.g., 2024)
-- `--day`: The day of the challenge (1-25)
-- `--part`: The part of the challenge (1 or 2)
-- `--language`: Programming language (python, javascript, java, cpp, golang, ruby)
-- `--disable-telemetry`: Disable anonymous usage tracking
-- `--help`: Show help information
+- `-y`,`--year`: The year of the challenge (e.g., 2024)
+- `-d`,`--day`: The day of the challenge (1-25)
+- `-p`,`--part`: The part of the challenge (1 or 2)
+- `-l`,`--language`: Programming language (python, javascript, java, cpp, golang, ruby)
+- `-t`,`--disable-telemetry`: Disable anonymous usage tracking
+- `-h`,`--help`: Show help information
+- `-v`,`--version`: Show version of application
 
 ### Hotkeys
 
@@ -123,7 +125,7 @@ adventofcode
 
 ```
 current/
-├── 2023/
+├── 2024/
 │   └── day1/
 │       ├── sample.txt
 │       └── part1.py
@@ -149,7 +151,7 @@ No personal information is collected. The data is used to:
 
 You can opt out of telemetry in two ways:
 
-1. Using the command line option: `--disable-telemetry`
+1. Using the command line option: `-t` or `--disable-telemetry`
 
 2. Using an environment variable: `DISABLE_TELEMETRY=true`
 

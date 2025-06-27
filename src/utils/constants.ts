@@ -35,26 +35,31 @@ export const NOOP = () => {};
 // These will be replaced by esbuild in build time
 declare const PACKAGE_NAME: string;
 declare const PACKAGE_VERSION: string;
+declare const PACKAGE_DESCRIPTION: string;
 declare const AMPLITUDE_API_KEY: string;
 
 // For development environment, read from package.json
 let packageName: string;
 let packageVersion: string;
+let packageDescription: string;
 let amplitudeApiKey: string;
 
 if (typeof PACKAGE_NAME === 'undefined' || typeof PACKAGE_VERSION === 'undefined') {
   const pkg = JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf-8'));
   packageName = pkg.name;
   packageVersion = pkg.version;
+  packageDescription = pkg.description;
   amplitudeApiKey = process.env['AMPLITUDE_API_KEY'] || '';
 } else {
   packageName = PACKAGE_NAME;
   packageVersion = PACKAGE_VERSION;
+  packageDescription = PACKAGE_DESCRIPTION;
   amplitudeApiKey = AMPLITUDE_API_KEY;
 }
 
 export const APP_NAME = packageName;
 export const APP_VERSION = packageVersion;
+export const APP_DESCRIPTION = packageDescription;
 export const APP_AMPLITUDE_API_KEY = amplitudeApiKey;
 
 export const OID_NAMESPACE = '6ba7b812-9dad-11d1-80b4-00c04fd430c8';

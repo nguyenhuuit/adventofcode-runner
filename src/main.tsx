@@ -14,18 +14,23 @@ import App from './App';
 const __filename = fileURLToPath(import.meta.url);
 const baseDir = dirname(__filename);
 
+program
+  .name(config.appName)
+  .version(config.appVersion, '-v, --version', 'Display version')
+  .helpOption('-h, --help', 'Display help')
+  .addOption(new Option('-y, --year <year>', 'Select year'))
+  .addOption(new Option('-l, --language <language>', 'Select programming language'))
+  .addOption(new Option('-d, --day <day>', 'Select day'))
+  .addOption(new Option('-p, --part <part>', 'Select part'))
+  .addOption(new Option('-t, --disable-telemetry', 'Disable telemetry'));
+
+program.showHelpAfterError();
+program.showSuggestionAfterError(false);
+program.parse();
+
 // Intentional clear of the console to avoid cluttering the output with previous runs.
 // eslint-disable-next-line no-console
 console.clear();
-
-program
-  .addOption(new Option('-y, --year <year>'))
-  .addOption(new Option('-l, --language <language>'))
-  .addOption(new Option('-d, --day <day>'))
-  .addOption(new Option('-p, --part <part>'))
-  .addOption(new Option('--disable-telemetry', 'Disable telemetry'));
-
-program.parse();
 
 config.telemetryEnabled = !program.opts()['disableTelemetry'];
 
